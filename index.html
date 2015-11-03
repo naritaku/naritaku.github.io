@@ -1,7 +1,45 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <meta charset="UTF-8">
+  <title>整備中</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="word.js"></script>
+  <script type="text/javascript" src="test.js"></script>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
-</body>
+  <header>
+    <h1>naritaku's page</h1>
+    <p>ここを使ってHTML,CSS,JavaScriptとかの勉強をしてます</p>
+  </header>
+
+  <div id="main">
+    <div class="content">
+      <h2>初期設定</h2>
+      <form id="setting" onsubmit="start();  return false;">
+          <ul>
+            <li><p>出題範囲:
+              <select name="range" id="range">
+                <option value="1">fruits</option>
+                <option value="2">coset1(20words)</option>
+                <option value="3">coset2(20words)</option>
+              </select></p></li>
+            <li><p>出題形式:
+              <select name="format">
+                <option value="1">書き取り</option>
+                <option value="2">4択(作成中)</option>
+              </select></p></li>
+            <li><p>出題数:
+              <select name="q_num">
+                <option value="1">10問</option>
+                <option value="2">full</option>
+              </select></p></li>
+          </ul>
+          <div class="center">
+            <input type="button" value="始める" onClick="start()" class="button">
+          </div>
+      </form>
+    </div>
+  </div>
 </html>
