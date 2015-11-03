@@ -73,3 +73,7 @@ header{
     color: #FFF;
     font-size:1em;
 }
+
+.select:hover{
+    background-color: #23366D;
+}

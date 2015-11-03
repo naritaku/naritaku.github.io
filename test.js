@@ -56,9 +56,20 @@ function change_q(){//問題の変更
       document.quiz.answer.focus()
       break;
     case '2':
+
+      var q_sel=[];
+      var sel=0;
+      for (var i=0; i<len; i++) {
+        q_sel[i] = i;
+      }
       for (var i = 0; i < choice.length; i++) {
-        choice[i]=Math.floor(Math.random () * len);
-        while(choice[i]===ran){choice[i]=Math.floor(Math.random () * len);}
+        sel=Math.floor(Math.random () * q_sel.length);
+        choice[i]=q_sel[sel];
+        while(choice[i]===ran){
+          sel=Math.floor(Math.random () * q_sel.length);
+          choice[i]=q_sel[sel];
+        }
+        q_sel.splice( sel , 1 ) ;
       }
       choice[Math.floor(Math.random () * 4)]=ran;
       document.getElementById("quiz").innerHTML=
