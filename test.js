@@ -24,6 +24,12 @@ function start(){//設定の変更が終わった時
     case '3':
       obj = JSON.parse(test2);
       break;
+    case '4':
+      obj = JSON.parse(test3);
+      break;
+    case '5':
+      obj = JSON.parse(test4);
+      break;
     }
   switch (q){
     case '1':
@@ -127,10 +133,12 @@ function result_q(){//テスト結果を表示
   document.getElementById("question").innerHTML='テスト結果';
   document.getElementById("sign").innerHTML="";
   if(miss===0){
-    document.getElementById("quiz").innerHTML='<p>正解数: '+ len +'問中/'+(len - miss)+'問<br>間違えた単語:　　なし</p><input type="button" value="初期設定へ" onClick="location.reload();" class="button"><input type="button" value="もう一度" onClick="load_q()" class="button">';
-  }else{
-  document.getElementById("quiz").innerHTML='<p>正解数: '+ len +'問中/'+(len - miss)+'問<br>間違えた単語</p><div class="center"><textarea cols="30" rows="8" readonly>'+mistake+'</textarea></div><input type="button" value="初期設定へ" onClick="location.reload();" class="button"><input type="button" value="もう一度" onClick="load_q()" class="button">';
+    var result='<p>正解数: '+ len +'問中/'+(len - miss)+'問<br>間違えた単語:　　なし</p>';
+      }else{
+    var result='<p>正解数: '+ len +'問中/'+(len - miss)+'問<br>間違えた単語</p><div class="center"><textarea cols="30" rows="8" readonly>'+mistake+'</textarea></div>';
   }
+  document.getElementById("quiz").innerHTML=result+'<div class="center"><input type="button" value="初期設定へ" onClick="location.reload();" class="button"><input type="button" value="もう一度" onClick="load_q()" class="button"></div>';
+
 }
 
 function load_q(){//変数への代入と問題の基本となるHTMLの表示
