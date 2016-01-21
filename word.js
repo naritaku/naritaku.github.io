@@ -11,6 +11,91 @@ var text = '{"employees":[' +
     '{ "en" : "raspberry",  "jp" : "ラズベリー",  "check" : "0" },' +
     '{ "en" : "banana",  "jp" : "バナナ",  "check" : "0" }]}';
 
+
+
+var test5 =  '{"employees":[' +
+ '	{  "en" : "renew",  "jp" : "更新する",  "check" : "0" },'+
+	'{  "en" : "mess",  "jp" : "散らかった",  "check" : "0" },'+
+	'{  "en" : "sew",  "jp" : "縫う",  "check" : "0"},'+
+	'{  "en" : "triumph",  "jp" : "大勝利",  "check" : "0" },'+
+	'{  "en" : "automobile",  "jp" : "自動車",  "check" : "0" },'+
+	'{  "en" : "statue",  "jp" : "像",  "check" : "0" },'+
+	'{  "en" : "praise",  "jp" : "ほめる",  "check" : "0"},'+
+	'{  "en" : "democracy",  "jp" : "民主主義",  "check" : "0" },'+
+	'{  "en" : "condense",  "jp" : "凝結する",  "check" : "0"},'+
+	'{  "en" : "gradient",  "jp" : "勾配",  "check" : "0"},'+
+	'{  "en" : "hood",  "jp" : "覆い",  "check" : "0"},'+
+	'{  "en" : "sludge",  "jp" : "汚泥",  "check" : "0"},'+
+	'{  "en" : "honor",  "jp" : "光栄",  "check" : "0"},'+
+	'{  "en" : "creep",  "jp" : "はう、腹ばう",  "check" : "0"},'+
+	'{  "en" : "legend",  "jp" : "伝説",  "check" : "0"},'+
+	'{  "en" : "sincere",  "jp" : "誠実",  "check" : "0"},'+
+	'{  "en" : "virtue",  "jp" : "美徳",  "check" : "0"},'+
+	'{  "en" : "devastate",  "jp" : "荒廃させる",  "check" : "0"},'+
+	'{  "en" : "shame",  "jp" : "恥ずかしい、思い",  "check" : "0"},'+
+	'{  "en" : "inhabit",  "jp" : "生息する",  "check" : "0"},'+
+	'{  "en" : "denounce",  "jp" : "非難する",  "check" : "0"},'+
+	'{  "en" : "expel",  "jp" : "追い出す",  "check" : "0"},'+
+	'{  "en" : "greet",  "jp" : "挨拶する",  "check" : "0"},'+
+	'{  "en" : "rumor",  "jp" : "噂",  "check" : "0"},'+
+	'{  "en" : "iodine",  "jp" : "ヨウ素",  "check" : "0"},'+
+	'{  "en" : "phosphorus",  "jp" : "リン",  "check" : "0"},'+
+	'{  "en" : "gigantic",  "jp" : "巨大な",  "check" : "0"},'+
+	'{  "en" : "stiff",  "jp" : "硬い",  "check" : "0"},'+
+	'{  "en" : "intimate",  "jp" : "親密な",  "check" : "0"},'+
+	'{  "en" : "boast",  "jp" : "自慢する",  "check" : "0" },'+
+	'{  "en" : "gratitude",  "jp" : "感謝",  "check" : "0"},'+
+	'{  "en" : "ethnic",  "jp" : "民族の",  "check" : "0"},'+
+	'{  "en" : "chill",  "jp" : "冷やす",  "check" : "0"},'+
+  '{  "en" : "fluorescence",  "jp" : "蛍光",  "check" : "0"  },'+
+	'{  "en" : "disguise",  "jp" : "偽装する",  "check" : "0"},'+
+	'{  "en" : "execute",  "jp" : "実行する",  "check" : "0" },'+
+	'{  "en" : "prohibit",  "jp" : "禁止する",  "check" : "0" },'+
+	'{  "en" : "generous",  "jp" : "寛大な",  "check" : "0" },'+
+	'{  "en" : "cheat",  "jp" : "だます",  "check" : "0" },'+
+	'{  "en" : "endure",  "jp" : "耐える",  "check" : "0" },'+
+	'{  "en" : "dictator",  "jp" : "独裁者",  "check" : "0"},'+
+	'{  "en" : "adjacent",  "jp" : "隣り合う",  "check" : "0" },'+
+	'{  "en" : "kidnap",  "jp" : "誘拐する",  "check" : "0"},'+
+	'{  "en" : "ditch",  "jp" : "水路",  "check" : "0"},'+
+	'{  "en" : "duct",  "jp" : "導管",  "check" : "0" },'+
+	'{  "en" : "usage",  "jp" : "使用",  "check" : "0"},'+
+	'{  "en" : "elastic",  "jp" : "弾性の",  "check" : "0"},'+
+	'{  "en" : "ridiculous",  "jp" : "ばかばかしい",  "check" : "0" },'+
+	'{  "en" : "tragic",  "jp" : "痛ましい",  "check" : "0" },'+
+	'{  "en" : "coolant",  "jp" : "冷却材",  "check" : "0" },'+
+	'{  "en" : "moist",  "jp" : "湿った",  "check" : "0" },'+
+	'{  "en" : "indispensable",  "jp" : "必要不可欠",  "check" : "0" },'+
+	'{  "en" : "clap",  "jp" : "手をたたく",  "check" : "0"  },'+
+	'{  "en" : "deficit",  "jp" : "赤字",  "check" : "0"  },'+
+	'{  "en" : "deploy",  "jp" : "配置する",  "check" : "0" },'+
+	'{  "en" : "ambition",  "jp" : "野心、望み",  "check" : "0" },'+
+	'{  "en" : "relay",  "jp" : "伝える",  "check" : "0" },'+
+	'{  "en" : "diffuse",  "jp" : "拡散",  "check" : "0" },'+
+	'{  "en" : "grateful",  "jp" : "感謝している",  "check" : "0" },'+
+	'{  "en" : "adhesive",  "jp" : "接着剤",  "check" : "0" },'+
+	'{  "en" : "ripe",  "jp" : "熟した",  "check" : "0" },'+
+	'{  "en" : "diligent",  "jp" : "勤勉な",  "check" : "0"},'+
+	'{  "en" : "diplomacy",  "jp" : "外交",  "check" : "0" },'+
+	'{  "en" : "diaphragm",  "jp" : "横隔膜",  "check" : "0"},'+
+	'{  "en" : "respiration",  "jp" : "呼吸",  "check" : "0" },'+
+	'{  "en" : "perpetual",  "jp" : "永久の",  "check" : "0"},'+
+	'{  "en" : "viscosity",  "jp" : "粘土",  "check" : "0" },'+
+	'{  "en" : "volatility",  "jp" : "揮発性",  "check" : "0" },'+
+	'{  "en" : "sediment",  "jp" : "堆積物",  "check" : "0"},'+
+	'{  "en" : "soluble",  "jp" : "溶けやすい",  "check" : "0" },'+
+	'{  "en" : "permeable",  "jp" : "透過性のある",  "check" : "0" },'+
+	'{  "en" : "cling",  "jp" : "くっつく",  "check" : "0" },'+
+	'{  "en" : "skim",  "jp" : "すくう",  "check" : "0"},'+
+	'{  "en" : "reputation",  "jp" : "評判",  "check" : "0" },'+
+	'{  "en" : "sting",  "jp" : "突く",  "check" : "0" },'+
+	'{  "en" : "interrupt",  "jp" : "中断させる",  "check" : "0"},'+
+	'{  "en" : "deceived",  "jp" : "だます",  "check" : "0"},'+
+	'{  "en" : "pharmacy",  "jp" : "薬局",  "check" : "0"  },'+
+	'{  "en" : "epoch",  "jp" : "時代",  "check" : "0" }]}';
+
+
+
 var test1='{"employees":['+
  	  '{  "en" : "buck",  "jp" : "大部分/容積",  "check" : "0" },'+
 	  '{  "en" : "deposit",  "jp" : "預金する",  "check" : "0" },'+

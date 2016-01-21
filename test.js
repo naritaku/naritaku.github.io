@@ -30,6 +30,9 @@ function start(){//設定の変更が終わった時
     case '5':
       obj = JSON.parse(test4);
       break;
+    case '6':
+      obj = JSON.parse(test5);
+      break;
     }
   switch (q){
     case '1':
@@ -53,7 +56,7 @@ function change_q(){//問題の変更
   var q_ran =Math.floor(Math.random () * q_num.length);
   ran=q_num[q_ran];
   q_num.splice( q_ran , 1 ) ;
-  var qes="問題"+ a +":"+ obj.employees[ran].jp;
+  var qes="問題"+ a +":<span onclick='speach();'>"+ obj.employees[ran].jp+"</span>";
   document.getElementById("question").innerHTML=qes;
   switch (format){
     case '1':
@@ -97,9 +100,10 @@ function select(i){//選択:答えが送信されたとき
     document.getElementById("sign").style.color = "blue";
     if (s_miss===1) {
       miss++;
-      mistake+=obj.employees[ran].jp+" : "+obj.employees[ran].en+"\n"
+      mistake+=obj.employees[ran].jp+"\t"+obj.employees[ran].en+"\n"
+      s_miss=0;
+
     }
-          s_miss=0;
     next();
   }else{
     s_miss=1
@@ -115,7 +119,13 @@ function ans(){//書き取り:答えが送信されたとき
     document.getElementById("sign").innerHTML="×    "+ obj.employees[ran].en;
     document.getElementById("sign").style.color = "red";
     miss++;
-    mistake+=obj.employees[ran].jp+" : "+obj.employees[ran].en+"\n"
+    if (obj.employees[ran].jp.length < 4){
+      mistake+=obj.employees[ran].jp+ "\t\t\t" +obj.employees[ran].en+"\n"
+    }else if (obj.employees[ran].jp.length < 8){
+        mistake+=obj.employees[ran].jp+ "\t\t" +obj.employees[ran].en+"\n"
+    }else{
+      mistake+=obj.employees[ran].jp+ "\t" +obj.employees[ran].en+"\n"
+    }
   }
   next();
 }
@@ -135,11 +145,36 @@ function result_q(){//テスト結果を表示
   if(miss===0){
     var result='<p>正解数: '+ len +'問中/'+(len - miss)+'問<br>間違えた単語:　　なし</p>';
       }else{
-    var result='<p>正解数: '+ len +'問中/'+(len - miss)+'問<br>間違えた単語</p><div class="center"><textarea cols="30" rows="8" readonly>'+mistake+'</textarea></div>';
+    var result='<p>正解数: '+ len +'問中/'+(len - miss)+'問<br>間違えた単語</p><div class="center"><textarea cols="40" rows="8" readonly>'+mistake+'</textarea></div>';
   }
   document.getElementById("quiz").innerHTML=result+'<div class="center"><input type="button" value="初期設定へ" onClick="location.reload();" class="button"><input type="button" value="もう一度" onClick="load_q()" class="button"></div>';
 
 }
+
+function speach(){
+    // unsupported.
+    if (!'SpeechSynthesisUtterance' in window) {
+        alert('Web Speech API には未対応です.');
+        return;
+    }
+
+    // 話すための機能をインスタンス化して、色々と値を設定します.
+    var msg = new SpeechSynthesisUtterance();
+    msg.volume = 1;
+    msg.voiceURI = 'native';
+    msg.rate = 1;
+    msg.pitch = 2;
+    msg.text = obj.employees[ran].en; // しゃべる内容
+    msg.lang = "en-US"; // en-US or ja-UP
+
+    // 終了した時の処理
+    msg.onend = function (event) {
+        console.log('speech end. time=' + event.elapsedTime + 's');
+    }
+
+    // テキストスピーチ開始
+    speechSynthesis.speak(msg);
+};
 
 function load_q(){//変数への代入と問題の基本となるHTMLの表示
   a=0;
@@ -152,12 +187,14 @@ function load_q(){//変数への代入と問題の基本となるHTMLの表示
   document.getElementById("main").innerHTML='<div class="content"><h3 id="question"></h3><p id="sign"></p><form id="quiz" name="quiz" onsubmit="ans();  return false;" autocomplete="off"><br><input type="text" name="answer" id="answer"  pattern="^[A-Za-z]+$"><input type="button" value="回答する" onClick="ans()"></form></div>';
   change_q();
 }
-//ENTER Keyで問題送り
-document.onkeydown = next1;
+
+//ENTER Keyで問題送り-------------------
+document.onkeydown = next1;//押されたとき
 function next1(key){
   if (mode===1 && event.keyCode == 13){mode++;}
 }
-document.onkeyup = next2;
+
+document.onkeyup = next2;//離されたとき
 function next2(key){
   if (mode===2 && event.keyCode == 13){
     if( q_num.length===0){
@@ -167,3 +204,4 @@ function next2(key){
     }
   }
 }
+//------------------------------------
