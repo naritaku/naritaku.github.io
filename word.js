@@ -14,7 +14,47 @@ var text = '{"employees":[' +
 
 
 var test5 =  '{"employees":[' +
- '	{  "en" : "renew",  "jp" : "更新する",  "check" : "0" },'+
+  '{  "en" : "sacrifice",  "jp" : "犠牲",  "check" : "0"  },'+
+  '{  "en" : "snatch",  "jp" : "ひったくる",  "check" : "0"  },'+
+  '{  "en" : "clutch",  "jp" : "つかむ",  "check" : "0" },'+
+  '{  "en" : "bump",  "jp" : "ぶつかる",  "check" : "0"  },'+
+  '{  "en" : "surrender",  "jp" : "降伏する",  "check" : "0"  },'+
+  '{  "en" : "chase",  "jp" : "追跡する",  "check" : "0"  },'+
+  '{  "en" : "rot",  "jp" : "腐る",  "check" : "0"  },'+
+  '{  "en" : "jar",  "jp" : "びん",  "check" : "0"  },'+
+  '{  "en" : "hostile",  "jp" : "敵意のある",  "check" : "0"  },'+
+  '{  "en" : "outstanding",  "jp" : "優れた",  "check" : "0"  },'+
+  '{  "en" : "compulsory",  "jp" : "必修の",  "check" : "0"  },'+
+  '{  "en" : "intervene",  "jp" : "介入する",  "check" : "0"  },'+
+  '{  "en" : "liable",  "jp" : "責任のある",  "check" : "0"  },'+
+  '{  "en" : "owe",  "jp" : "借りがある",  "check" : "0"  },'+
+  '{  "en" : "vigorous",  "jp" : "元気な",  "check" : "0"  },'+
+  '{  "en" : "commerce",  "jp" : "商業",  "check" : "0"  },'+
+  '{  "en" : "distress",  "jp" : "悩ます",  "check" : "0"  },'+
+  '{  "en" : "restrains",  "jp" : "抑える",  "check" : "0"  },'+
+  '{  "en" : "stationary",  "jp" : "静止した",  "check" : "0"  },'+
+  '{  "en" : "shipment",  "jp" : "出荷",  "check" : "0" },'+
+  '{  "en" : "anticipate",  "jp" : "予測する",  "check" : "0"  },'+
+  '{  "en" : "stack",  "jp" : "積み上げる",  "check" : "0"  },'+
+  '{  "en" : "prolong",  "jp" : "延ばす",  "check" : "0" },'+
+  '{  "en" : "condemn",  "jp" : "非難する",  "check" : "0"  },'+
+  '{  "en" : "diminish",  "jp" : "減らす",  "check" : "0"  },'+
+  '{  "en" : "depart",  "jp" : "出発する",  "check" : "0"  },'+
+  '{  "en" : "remarkable",  "jp" : "素晴らしい",  "check" : "0"  },'+
+  '{  "en" : "helpful",  "jp" : "役立つ",  "check" : "0"  },'+
+  '{  "en" : "thorough",  "jp" : "徹底的な",  "check" : "0"  },'+
+  '{  "en" : "anniversary",  "jp" : "記念日",  "check" : "0"  },'+
+  '{  "en" : "assert",  "jp" : "主張する",  "check" : "0"  },'+
+  '{  "en" : "destructive",  "jp" : "破壊的な",  "check" : "0"  },'+
+  '{  "en" : "inferior",  "jp" : "劣った",  "check" : "0"  },'+
+  '{  "en" : "redundant",  "jp" : "冗長な",  "check" : "0" },'+
+  '{  "en" : "compelled",  "jp" : "強要する",  "check" : "0"  },'+
+  '{  "en" : "fulfill",  "jp" : "夢などをかなえる",  "check" : "0"  },'+
+  '{  "en" : "moderate",  "jp" : "適度",  "check" : "0"  },'+
+  '{  "en" : "superior",  "jp" : "優れている",  "check" : "0"  },'+
+  '{  "en" : "vanish",  "jp" : "消える",  "check" : "0"  },'+
+  '{  "en" : "vague",  "jp" : "あいまいな",  "check" : "0"  },'+
+  '{  "en" : "renew",  "jp" : "更新する",  "check" : "0" },'+
 	'{  "en" : "mess",  "jp" : "散らかった",  "check" : "0" },'+
 	'{  "en" : "sew",  "jp" : "縫う",  "check" : "0"},'+
 	'{  "en" : "triumph",  "jp" : "大勝利",  "check" : "0" },'+
@@ -57,7 +97,8 @@ var test5 =  '{"employees":[' +
 	'{  "en" : "dictator",  "jp" : "独裁者",  "check" : "0"},'+
 	'{  "en" : "adjacent",  "jp" : "隣り合う",  "check" : "0" },'+
 	'{  "en" : "kidnap",  "jp" : "誘拐する",  "check" : "0"},'+
-	'{  "en" : "ditch",  "jp" : "水路",  "check" : "0"},'+
+  '{  "en" : "",  "jp" : "仕切り",  "check" : "0"},'+
+  '{  "en" : "ditch",  "jp" : "水路",  "check" : "0"},'+
 	'{  "en" : "duct",  "jp" : "導管",  "check" : "0" },'+
 	'{  "en" : "usage",  "jp" : "使用",  "check" : "0"},'+
 	'{  "en" : "elastic",  "jp" : "弾性の",  "check" : "0"},'+

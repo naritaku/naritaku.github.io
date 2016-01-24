@@ -100,7 +100,13 @@ function select(i){//選択:答えが送信されたとき
     document.getElementById("sign").style.color = "blue";
     if (s_miss===1) {
       miss++;
-      mistake+=obj.employees[ran].jp+"\t"+obj.employees[ran].en+"\n"
+      if (obj.employees[ran].jp.length < 4){
+        mistake+=obj.employees[ran].jp+ "\t\t\t" +obj.employees[ran].en+"\n"
+      }else if (obj.employees[ran].jp.length < 8){
+          mistake+=obj.employees[ran].jp+ "\t\t" +obj.employees[ran].en+"\n"
+      }else{
+        mistake+=obj.employees[ran].jp+ "\t" +obj.employees[ran].en+"\n"
+      }
       s_miss=0;
 
     }
