@@ -68,7 +68,7 @@ function change_q(){//問題の変更
 
       var q_sel=[];
       var sel=0;
-      for (var i=0; i<len; i++) {
+      for (var i=0; i<obj.employees.length; i++) {
         q_sel[i] = i;
       }
       for (var i = 0; i < choice.length; i++) {
@@ -137,7 +137,7 @@ function ans(){//書き取り:答えが送信されたとき
 }
 
 function next(){//問題の更新か結果表示の分岐
-  if( q_num.length===0){
+  if( len ===a){
     document.getElementById("quiz").innerHTML='<div class="center"><input type="button" value="結果を表示" onClick="result_q()" class="button" onKeyPress="Key_on(window.event.keyCode)"></div>';
   }else{
     document.getElementById("quiz").innerHTML='<div class="center"><input type="button" value="次へ" onClick="change_q()" class="button" onKeyPress="Key_on(window.event.keyCode)"></div>';
@@ -187,7 +187,7 @@ function load_q(){//変数への代入と問題の基本となるHTMLの表示
   mistake="";
   miss=0;
   q_num = [];
-  for (var i=0; i<len; i++) {
+  for (var i=0; i<obj.employees.length; i++) {
     q_num[i] = i;
   }
   document.getElementById("main").innerHTML='<div class="content"><h3 id="question"></h3><p id="sign"></p><form id="quiz" name="quiz" onsubmit="ans();  return false;" autocomplete="off"><br><input type="text" name="answer" id="answer"  pattern="^[A-Za-z]+$"><input type="button" value="回答する" onClick="ans()"></form></div>';
@@ -203,7 +203,7 @@ function next1(key){
 document.onkeyup = next2;//離されたとき
 function next2(key){
   if (mode===2 && event.keyCode == 13){
-    if( q_num.length===0){
+    if( len===a){
       result_q();
     }else{
       change_q();

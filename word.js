@@ -97,7 +97,7 @@ var test5 =  '{"employees":[' +
 	'{  "en" : "dictator",  "jp" : "独裁者",  "check" : "0"},'+
 	'{  "en" : "adjacent",  "jp" : "隣り合う",  "check" : "0" },'+
 	'{  "en" : "kidnap",  "jp" : "誘拐する",  "check" : "0"},'+
-  '{  "en" : "",  "jp" : "仕切り",  "check" : "0"},'+
+  '{  "en" : "partition",  "jp" : "仕切り",  "check" : "0"},'+
   '{  "en" : "ditch",  "jp" : "水路",  "check" : "0"},'+
 	'{  "en" : "duct",  "jp" : "導管",  "check" : "0" },'+
 	'{  "en" : "usage",  "jp" : "使用",  "check" : "0"},'+
