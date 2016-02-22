@@ -8,14 +8,14 @@
         return {status: 2, msg: 'Ready'};
     };
 
-    ext.my_first_block = function() {
+    ext.Hello_scratchx = function() {
         alert("Hello_scratchx")
         // Code that gets executed when the block is run
     };
 
     // Block and block menu descriptions
     var descriptor = {
-        blocks: [[' ', 'my first block', 'my_first_block'],
+        blocks: [[' ', 'Hello_scratchx', ''Hello_scratchx''],
         ]
     };
 
