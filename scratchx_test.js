@@ -15,7 +15,7 @@
 
     // Block and block menu descriptions
     var descriptor = {
-        blocks: [[' ', 'Hello_scratchx', ''Hello_scratchx''],
+        blocks: [[' ', 'Hello_scratchx', 'Hello_scratchx'],
         ]
     };
 
