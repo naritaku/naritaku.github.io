@@ -1,5 +1,5 @@
 var color;
-
+var red;var green;var blue;
 
 (function(ext) {
     // Cleanup function when the extension is unloaded
@@ -16,6 +16,9 @@ var color;
         // Code that gets executed when the block is run
     };
     ext.set_color = function(Red,Green,Blue) {
+        red=Red;
+        green=Green;
+        blue=Blue;
         color=Red*0x10000+Green*0x100+Blue
     };
     ext.send_color = function() {
@@ -31,5 +34,5 @@ var color;
     };
 
     // Register the extension
-    ScratchExtensions.register('Sample extension', descriptor, ext);
+    ScratchExtensions.register('test extension', descriptor, ext);
 })({});
