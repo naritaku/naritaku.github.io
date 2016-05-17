@@ -23,7 +23,7 @@ var message ="";
         device.set_receive_handler(function(data) {
             message=data
         });
-
+    }
     ext.get_message = function() {
             return message;
         };
