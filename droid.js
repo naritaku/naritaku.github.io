@@ -1,9 +1,7 @@
 var message ="";
 
 (function(ext) {
-  var serial_info = {type: 'serial'};
-   var device = null;
-ScratchExtensions.register('Connect to android ', descriptor, ext, serial_info);
+    var device=null
     var potentialDevices = [];
     ext._deviceConnected = function(dev) {
         potentialDevices.push(dev);
@@ -25,7 +23,7 @@ ScratchExtensions.register('Connect to android ', descriptor, ext, serial_info);
         device.set_receive_handler(function(data) {
             message=data
         });
-    }
+}
     ext.get_message = function() {
             return message;
         };
@@ -52,4 +50,6 @@ ScratchExtensions.register('Connect to android ', descriptor, ext, serial_info);
     if(!device) return {status: 1, msg: 'Device not connected'};
     return {status: 2, msg: 'Device connected'};
   };
+    // Register the extension
+  ScratchExtensions.register('Connect to android via Bluetooth', descriptor, ext, {type: 'serial'});
 })({});
