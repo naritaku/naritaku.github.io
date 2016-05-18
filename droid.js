@@ -22,6 +22,7 @@ var message ="";
         device.open({ stopBits: 0, ctsFlowControl: 0 });
         device.set_receive_handler(function(data) {
             rawData = new Uint8Array(data);
+            message=0;
             var bytes = new Uint8Array(rawData);
             message = bytes;
         });
