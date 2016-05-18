@@ -30,9 +30,9 @@ var message ="";
               var bytes = new Uint8Array(rawData);
 
                   inputArray = 0;
-                  var hb = bytes[i*2] & 127;
+                  var hb = bytes & 127;
                   var channel = hb >> 3;
-                  var lb = bytes[i*2+1] & 127;
+                  var lb = bytes & 127;
                   inputArray = ((hb & 7) << 7) + lb;
 
                   message = inputArray;
