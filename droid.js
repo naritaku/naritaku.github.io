@@ -1,7 +1,7 @@
 var message ="";
 
 (function(ext) {
-    var device=null
+    var device=null;
     var potentialDevices = [];
     ext._deviceConnected = function(dev) {
         potentialDevices.push(dev);
@@ -19,11 +19,14 @@ var message ="";
         if (!device) return;
 
         device.open({ stopBits: 0, ctsFlowControl: 0 });
-}
-    ext.get_message = function() {
         device.set_receive_handler(function(data) {
-            message=data
+            message=new Uint8Array(data);
         });
+}
+
+
+
+    ext.get_message = function() {
             return message;
     };
     // Block and block menu descriptions
