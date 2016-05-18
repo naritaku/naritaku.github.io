@@ -22,22 +22,15 @@ var message ="";
         device.open({ stopBits: 0, ctsFlowControl: 0 });
         device.set_receive_handler(function(data) {
             rawData = new Uint8Array(data);
-            processData();
+            var bytes = new Uint8Array(rawData);
+            var inputArray = 0;
+            var hb = bytes & 127;
+            var channel = hb >> 3;
+            var lb = bytes & 127;
+            inputArray = ((hb & 7) << 7) + lb;
+            message = inputArray;
         });
-      }
-      var inputArray=0;
-          function processData() {
-              var bytes = new Uint8Array(rawData);
-
-                  inputArray = 0;
-                  var hb = bytes & 127;
-                  var channel = hb >> 3;
-                  var lb = bytes & 127;
-                  inputArray = ((hb & 7) << 7) + lb;
-
-                  message = inputArray;
-              }
-
+      } 
 
 
     ext.get_message = function() {
