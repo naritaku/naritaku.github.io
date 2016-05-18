@@ -23,7 +23,7 @@ var message ="";
         device.set_receive_handler(function(data) {
             console.log(data);
             console.log( new Uint8Array(data));
-            message = bytes;
+            console.log( String.fromCharCode.apply(null,new Uint8Array(data)));
         });
       }
 
