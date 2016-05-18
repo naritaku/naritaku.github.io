@@ -35,7 +35,7 @@ var message ="";
                   var lb = bytes[i*2+1] & 127;
                   inputArray = ((hb & 7) << 7) + lb;
 
-                  message = inputArray[0];
+                  message = inputArray;
               }
 
 
