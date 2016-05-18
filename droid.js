@@ -23,14 +23,9 @@ var message ="";
         device.set_receive_handler(function(data) {
             rawData = new Uint8Array(data);
             var bytes = new Uint8Array(rawData);
-            var inputArray = 0;
-            var hb = bytes & 127;
-            var channel = hb >> 3;
-            var lb = bytes & 127;
-            inputArray = ((hb & 7) << 7) + lb;
-            message = inputArray;
+            message = bytes;
         });
-      } 
+      }
 
 
     ext.get_message = function() {
