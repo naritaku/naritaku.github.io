@@ -14,19 +14,18 @@ var message ="";
     var poller = null;
     var watchdog = null;
     function tryNextDevice() {
-        // If potentialDevices is empty, device will be undefined.
-        // That will get us back here next time a device is connected.
+
         device = potentialDevices.shift();
         if (!device) return;
 
         device.open({ stopBits: 0, ctsFlowControl: 0 });
+}
+    ext.get_message = function() {
         device.set_receive_handler(function(data) {
             message=data
         });
-}
-    ext.get_message = function() {
             return message;
-        };
+    };
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
