@@ -2,6 +2,7 @@ var message ="";
 
 (function(ext) {
     var device=null;
+    var rawData = null;
     var potentialDevices = [];
     ext._deviceConnected = function(dev) {
         potentialDevices.push(dev);
@@ -20,9 +21,22 @@ var message ="";
 
         device.open({ stopBits: 0, ctsFlowControl: 0 });
         device.set_receive_handler(function(data) {
-            message=new Uint8Array(data);
+            rawData = new Uint8Array(data);
+            processData();
         });
-}
+      }
+      var inputArray=0;
+          function processData() {
+              var bytes = new Uint8Array(rawData);
+
+                  inputArray = 0;
+                  var hb = bytes[i*2] & 127;
+                  var channel = hb >> 3;
+                  var lb = bytes[i*2+1] & 127;
+                  inputArray = ((hb & 7) << 7) + lb;
+
+                  message = inputArray[0];
+              }
 
 
 
