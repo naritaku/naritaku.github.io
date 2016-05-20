@@ -82,7 +82,8 @@ var yellow=0;
           ['r', 'yellow_btn','get_yellow']
         ]
         menus: {
-        color: ['blue ', 'red', 'green', 'yellow'],
+          color: ['blue ', 'red', 'green', 'yellow']
+        }
     };
 
     ext._deviceRemoved = function(dev) {
