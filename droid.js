@@ -33,23 +33,39 @@ var yellow=0;
             console.log(mes);
             message=mes;
           }elseif(mes[0]&&0x10===0x00){
-            red=mes[0]&&0x01===0x01
-            bule=mes[0]&&0x02===0x02
-            green=mes[0]&&0x04===0x04
-            yellow=mes[0]&&0x08===0x08
+            red=mes[0]&&0x01===0x01;
+            bule=mes[0]&&0x02===0x02;
+            green=mes[0]&&0x04===0x04;
+            yellow=mes[0]&&0x08===0x08;
           }
 
         });
       }
 
-
     ext.get_message = function() {
-            return message;
+              return message;
+    };
+    ext.get_red = function() {
+            return red;
+    };
+    ext.get_blue = function() {
+            return blue;
+    };
+    ext.get_green = function() {
+            return green;
+    };
+    ext.get_yellow = function() {
+            return yellow;
     };
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-          ['r', 'message','get_message']
+          ['r', 'message','get_message'];
+          ['r', 'red_btn','get_red'];
+          ['r', 'blue_btn','get_blue'];
+          ['r', 'green_btn','get_green'];
+          ['r', 'yellow_btn','get_yellow'];
+
         ]
     };
 
