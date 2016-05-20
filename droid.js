@@ -28,26 +28,21 @@ var read_accel=0;
         device.set_receive_handler(function(data) {
           var mes= new Uint8Array(data);
           console.log(mes);
-          if(read_accel===1){
-              accel=mes[0]/25;
+          if(mes[0]=16){
+              accel=mes[1]/10;
+          }else if(mes[0]===48){//receive message
+              mes=mes.slice(1);
+              mes=new TextDecoder("utf8").decode(mes);
+              message=mes;
           }else{
-              if(mes[0]===16){
-                read_accel=3;
-              }else if(mes[0]===48){//receive message
-                mes=mes.slice(1);
-                mes=new TextDecoder("utf8").decode(mes);
-                message=mes;
-              }else{
-                var mode=mes[0]&0xF0;
-                if (mode===0x00) {
-                  blue=(mes[0]&1);
-                  red=(mes[0]&2)/2;
-                  green=(mes[0]&4)/4;
-                  yellow=(mes[0]&8)/8;
-                }
+              var mode=mes[0]&0xF0;
+              if (mode===0x00) {
+                blue=(mes[0]&1);
+                red=(mes[0]&2)/2;
+                green=(mes[0]&4)/4;
+                yellow=(mes[0]&8)/8;
               }
           }
-
         });
       }
 
