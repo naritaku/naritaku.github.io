@@ -1,5 +1,8 @@
 var message ="";
-
+var red=0;
+var blue=0;
+var green=0;
+var yellow=0;
 (function(ext) {
     var device=null;
     var rawData = null;
@@ -22,10 +25,20 @@ var message ="";
         device.open({ stopBits: 0, ctsFlowControl: 0 });
         device.set_receive_handler(function(data) {
           var mes= new Uint8Array(data);
-          //console.log(mes);
-          var mes=new TextDecoder("utf8").decode(mes);
-          //console.log(mes);
-          message=mes;
+          console.log(mes);
+          if(mes[0]===30){//receive message
+            mes.shift();
+            console.log(mes);
+            var mes=new TextDecoder("utf8").decode(mes);
+            console.log(mes);
+            message=mes;
+          }elseif(mes[0]&&0x10===0x00){
+            red=mes[0]&&0x01===0x01
+            bule=mes[0]&&0x02===0x02
+            green=mes[0]&&0x04===0x04
+            yellow=mes[0]&&0x08===0x08
+          }
+
         });
       }
 
