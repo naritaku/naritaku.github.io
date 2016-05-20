@@ -4,33 +4,26 @@ var blue=0;
 var green=0;
 var yellow=0;
 var accel=0;
-var read_accel=0;
 (function(ext) {
     var device=null;
     var rawData = null;
     var potentialDevices = [];
     ext._deviceConnected = function(dev) {
         potentialDevices.push(dev);
-
         if (!device) {
             tryNextDevice();
         }
     }
-
     var poller = null;
     var watchdog = null;
     function tryNextDevice() {
-
         device = potentialDevices.shift();
         if (!device) return;
-
         device.open({ stopBits: 0, ctsFlowControl: 0 });
         device.set_receive_handler(function(data) {
           var mes= new Uint8Array(data);
           console.log(mes);
-          if(mes[0]=16){
-              accel=mes[1]/10;
-          }else if(mes[0]===48){//receive message
+          if(mes[0]===0x30){//receive message
               mes=mes.slice(1);
               mes=new TextDecoder("utf8").decode(mes);
               message=mes;
@@ -41,6 +34,8 @@ var read_accel=0;
                 red=(mes[0]&2)/2;
                 green=(mes[0]&4)/4;
                 yellow=(mes[0]&8)/8;
+              }else if(mode===0x10){
+                  accel=(mes[0]&0x0f)*512+mes[1];
               }
           }
         });
