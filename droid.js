@@ -22,7 +22,7 @@ var message ="";
         device.open({ stopBits: 0, ctsFlowControl: 0 });
         device.set_receive_handler(function(data) {
             console.log(data);
-            console.log( new Uint32Array(data));
+            console.log( new Uint8Array(data));
             message= String.fromCharCode.apply(null,new Uint32Array(data));
         });
       }
