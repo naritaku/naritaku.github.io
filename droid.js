@@ -26,19 +26,19 @@ var yellow=0;
         device.set_receive_handler(function(data) {
           var mes= new Uint8Array(data);
           console.log(mes);
-          if(mes[0]===30){//receive message
+          if(mes[0]===48){//receive message
             mes.shift();
             console.log(mes);
             var mes=new TextDecoder("utf8").decode(mes);
             console.log(mes);
             message=mes;
           }else{
-            mes[0]=mes[0]&&0x10;
-            if (mes[0]===0x00) {
-              red=mes[0]&&0x01==0x01;
-              bule=mes[0]&&0x02==0x02;
-              green=mes[0]&&0x04==0x04;
-              yellow=mes[0]&&0x08==0x08;
+            var mode=mes[0]&&0x10;
+            if (mode==0x00) {
+              red=(mes[0]&&0x01)==0x01;
+              bule=(mes[0]&&0x02)==0x02;
+              green=(mes[0]&&0x04)==0x04;
+              yellow=(mes[0]&&0x08)==0x08;
             }
           }
         });
