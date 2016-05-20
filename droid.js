@@ -36,15 +36,26 @@ var yellow=0;
             var mode=mes[0]&0x10;
             console.log(mode);
             if (mode===0x00) {
-             red=(mes[0]&1);
-             blue=(mes[0]&2)/2;
+             blue=(mes[0]&1);
+             red=(mes[0]&2)/2;
              green=(mes[0]&4)/4;
              yellow=(mes[0]&8)/8;
             }
           }
         });
       }
-
+    ext.when_push = function(color) {
+        switch (color) {
+          case 'blue':
+            return(blue===1);
+          case 'red':
+            return(red===1);
+          case 'green':
+            return(green===1);
+          case 'yellow':
+              return(yellow===1);
+        }
+    };
     ext.get_message = function() {
               return message;
     };
@@ -63,13 +74,15 @@ var yellow=0;
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
+          ['h', 'when %m.color button pushed', 'when_push','blue'],
           ['r', 'message','get_message'],
           ['r', 'red_btn','get_red'],
           ['r', 'blue_btn','get_blue'],
           ['r', 'green_btn','get_green'],
           ['r', 'yellow_btn','get_yellow']
-
         ]
+        menus: {
+        color: ['blue ', 'red', 'green', 'yellow'],
     };
 
     ext._deviceRemoved = function(dev) {
