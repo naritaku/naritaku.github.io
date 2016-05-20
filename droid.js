@@ -32,15 +32,15 @@ var yellow=0;
             var mes=new TextDecoder("utf8").decode(mes);
             console.log(mes);
             message=mes;
-          }else｛
-            mes[0]=int(mes[0])&&0x10;
+          }else{
+            mes[0]=mes[0]&&0x10;
             if (mes[0]===0x00) {
               red=mes[0]&&0x01==0x01;
               bule=mes[0]&&0x02==0x02;
               green=mes[0]&&0x04==0x04;
               yellow=mes[0]&&0x08==0x08;
+            }
           }
-
         });
       }
 
