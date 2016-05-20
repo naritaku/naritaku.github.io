@@ -43,27 +43,46 @@ var read_accel=0;
               z_accel=mes[0]/10;
               read_accel--;
               break;
+            case 0:
+              if(mes[0]===16){
+                read_accel=3;
+              }else if(mes[0]===48){//receive message
+                mes=mes.slice(1);
+                var mes=new TextDecoder("utf8").decode(mes);
+                message=mes;
+              }else{
+                var mode=mes[0]&0xF0;
+                if (mode===0x00) {
+                  blue=(mes[0]&1);
+                  red=(mes[0]&2)/2;
+                  green=(mes[0]&4)/4;
+                  yellow=(mes[0]&8)/8;
+                }
+              }
           default:
               break;
           }
-          if(mes[0]===16&&read_accel===0){
-            read_accel=3;
-          }
-          if(mes[0]===48){//receive message
-            mes=mes.slice(1);
-            var mes=new TextDecoder("utf8").decode(mes);
-            message=mes;
-          }else{
-            var mode=mes[0]&0xF0;
-            if (mode===0x00) {
-             blue=(mes[0]&1);
-             red=(mes[0]&2)/2;
-             green=(mes[0]&4)/4;
-             yellow=(mes[0]&8)/8;
-           }
-          }
+
         });
       }
+
+      ext.when_accel = function(axis,sign,level) {
+          switch (axis) {
+            case 'x':
+              var accel=x_accel;
+            case 'y':
+              var accel=y_accel;
+            case 'z':
+              var accel=z_accel;
+            case 'abs':
+              var accel=abs_accel;
+          }
+          if (sign==">"){return accel>level;}else{return accel<level;}
+      };
+
+
+
+
     ext.when_push = function(color) {
         switch (color) {
           case 'blue':
@@ -100,10 +119,14 @@ var read_accel=0;
     ext.get_z_accel = function() {
             return z_accel;
     };
+    ext.get_abs_accel = function() {
+            return sqrt(x_accel^2+y_accel^2+z_accel^2);
+    };
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
           ['h', 'when %m.color button pushed', 'when_push','blue'],
+          ['h', 'when %m.axis _accel %m.lessmore %d','when_accel', 'abs','>',10],
           ['r', 'message','get_message'],
           ['r', 'red_btn','get_red'],
           ['r', 'blue_btn','get_blue'],
@@ -111,10 +134,13 @@ var read_accel=0;
           ['r', 'yellow_btn','get_yellow'],
           ['r', 'x_accel','get_x_accel'],
           ['r', 'y_accel','get_y_accel'],
-          ['r', 'z_accel','get_z_accel']
+          ['r', 'z_accel','get_z_accel'],
+          ['r', 'abs_accel','get_abs_accel'],
         ],
         menus: {
-          color: ['blue ', 'red', 'green', 'yellow']
+          color: ['blue ', 'red', 'green', 'yellow'],
+          axis:['x', 'y', 'z', 'abs']
+          lessMore: ['>', '<']
         }
     };
 
