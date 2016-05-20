@@ -32,12 +32,15 @@ var read_accel=0;
           console.log(mes);
           switch (read_accel) {
             case 3:
+              x_accel=mes[0]/10;
               read_accel--;
               break;
             case 2:
+              y_accel=mes[0]/10;
               read_accel--;
               break;
             case 1:
+              z_accel=mes[0]/10;
               read_accel--;
               break;
           default:
