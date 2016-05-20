@@ -27,7 +27,7 @@ var yellow=0;
           var mes= new Uint8Array(data);
           console.log(mes);
           if(mes[0]===48){//receive message
-            mes.shift();
+            mes=mes.slice(1,-1);
             console.log(mes);
             var mes=new TextDecoder("utf8").decode(mes);
             console.log(mes);
@@ -35,10 +35,10 @@ var yellow=0;
           }else{
             var mode=mes[0]&&0x10;
             if (mode==0x00) {
-              red=(mes[0]&&0x01)==0x01;
-              bule=(mes[0]&&0x02)==0x02;
-              green=(mes[0]&&0x04)==0x04;
-              yellow=(mes[0]&&0x08)==0x08;
+              red=(mes[0]==1);
+              bule=(mes[0]==2);
+              green=(mes[0]==4);
+              yellow=(mes[0]==8;
             }
           }
         });
