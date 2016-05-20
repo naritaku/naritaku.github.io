@@ -3,7 +3,7 @@ var red=0;
 var blue=0;
 var green=0;
 var yellow=0;
-var accel=0;
+
 (function(ext) {
     var device=null;
     var rawData = null;
@@ -34,16 +34,12 @@ var accel=0;
                 red=(mes[0]&2)/2;
                 green=(mes[0]&4)/4;
                 yellow=(mes[0]&8)/8;
-              }else if(mode===0x10){
-                  accel=(mes[0]&0x0f)*512+mes[1];
               }
           }
         });
       }
 
-      ext.when_accel = function(sign,level) {
-        if (sign==">"){return accel>level;}else{return accel<level;}
-      };
+
       ext.when_push = function(color) {
         switch (color) {
           case 'blue':
@@ -71,24 +67,19 @@ var accel=0;
     ext.get_yellow = function() {
             return yellow;
     };
-    ext.get_accel = function() {
-            return accel;
-    };
+
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
           ['h', 'when %m.color button pushed', 'when_push','blue'],
-          ['h', 'when accel %m.lessmore %d','when_accel','>',10],
           ['r', 'message','get_message'],
           ['r', 'red_btn','get_red'],
           ['r', 'blue_btn','get_blue'],
           ['r', 'green_btn','get_green'],
-          ['r', 'yellow_btn','get_yellow'],
-          ['r', 'accel','get_accel']
+          ['r', 'yellow_btn','get_yellow']
         ],
         menus: {
           color: ['blue ', 'red', 'green', 'yellow'],
-          lessMore: ['>', '<']
         }
     };
 
