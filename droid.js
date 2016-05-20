@@ -27,18 +27,19 @@ var yellow=0;
           var mes= new Uint8Array(data);
           console.log(mes);
           if(mes[0]===48){//receive message
-            mes=mes.slice(1,-1);
+            mes=mes.slice(1);
             console.log(mes);
             var mes=new TextDecoder("utf8").decode(mes);
-            console.log(mes);
+            //console.log(mes);
             message=mes;
           }else{
-            var mode=mes[0]&&0x10;
+            var mode=mes[0]&0x10;
+            console.log(mode);
             if (mode===0x00) {
-              red=(mes[0]==1);
-              bule=(mes[0]==2);
-              green=(mes[0]==4);
-              yellow=(mes[0]==8);
+             red=(mes[0]&1);
+             blue=(mes[0]&2)/2;
+             green=(mes[0]&4)/4;
+             yellow=(mes[0]&8)/8;
             }
           }
         });
