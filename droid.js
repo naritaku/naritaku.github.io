@@ -80,7 +80,7 @@ var yellow=0;
           ['r', 'blue_btn','get_blue'],
           ['r', 'green_btn','get_green'],
           ['r', 'yellow_btn','get_yellow']
-        ]
+        ],
         menus: {
           color: ['blue ', 'red', 'green', 'yellow']
         }
