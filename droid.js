@@ -28,14 +28,14 @@ var read_accel=0;
         device.set_receive_handler(function(data) {
           var mes= new Uint8Array(data);
           console.log(mes);
-          if(read_accel=1){
+          if(read_accel===1){
               accel=mes[0]/25;
           }else{
               if(mes[0]===16){
                 read_accel=3;
               }else if(mes[0]===48){//receive message
                 mes=mes.slice(1);
-                var mes=new TextDecoder("utf8").decode(mes);
+                mes=new TextDecoder("utf8").decode(mes);
                 message=mes;
               }else{
                 var mode=mes[0]&0xF0;
@@ -82,7 +82,7 @@ var read_accel=0;
             return yellow;
     };
     ext.get_accel = function() {
-            return accel
+            return accel;
     };
     // Block and block menu descriptions
     var descriptor = {
@@ -94,7 +94,7 @@ var read_accel=0;
           ['r', 'blue_btn','get_blue'],
           ['r', 'green_btn','get_green'],
           ['r', 'yellow_btn','get_yellow'],
-          ['r', 'accel','get_accel'],
+          ['r', 'accel','get_accel']
         ],
         menus: {
           color: ['blue ', 'red', 'green', 'yellow'],
@@ -112,7 +112,7 @@ var read_accel=0;
     if(poller) poller = clearInterval(poller);
     if(device) device.close();
     device = null;
-  }
+  };
 
   ext._getStatus = function() {
     if(!device) return {status: 1, msg: 'Device not connected'};
