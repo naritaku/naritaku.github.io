@@ -23,7 +23,7 @@ var message ="";
         device.set_receive_handler(function(data) {
           var mes= new Uint8Array(data);
           console.log(mes);
-          var mes= new Uint32Array(data);
+          var mes=new TextDecoder("utf8").decode(mes);
           console.log(mes);
         });
       }
