@@ -139,7 +139,7 @@ var read_accel=0;
         ],
         menus: {
           color: ['blue ', 'red', 'green', 'yellow'],
-          axis:['x', 'y', 'z', 'abs']
+          axis:['x', 'y', 'z', 'abs'],
           lessMore: ['>', '<']
         }
     };
