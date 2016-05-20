@@ -34,11 +34,11 @@ var yellow=0;
             message=mes;
           }else{
             var mode=mes[0]&&0x10;
-            if (mode==0x00) {
+            if (mode===0x00) {
               red=(mes[0]==1);
               bule=(mes[0]==2);
               green=(mes[0]==4);
-              yellow=(mes[0]==8;
+              yellow=(mes[0]==8);
             }
           }
         });
