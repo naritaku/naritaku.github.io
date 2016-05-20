@@ -62,11 +62,11 @@ var yellow=0;
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-          ['r', 'message','get_message'];
-          ['r', 'red_btn','get_red'];
-          ['r', 'blue_btn','get_blue'];
-          ['r', 'green_btn','get_green'];
-          ['r', 'yellow_btn','get_yellow'];
+          ['r', 'message','get_message'],
+          ['r', 'red_btn','get_red'],
+          ['r', 'blue_btn','get_blue'],
+          ['r', 'green_btn','get_green'],
+          ['r', 'yellow_btn','get_yellow']
 
         ]
     };
