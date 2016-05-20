@@ -33,7 +33,7 @@ var yellow=0;
             console.log(mes);
             message=mes;
           }else｛
-            mes[0]=mes[0]&&0x10;
+            mes[0]=int(mes[0])&&0x10;
             if (mes[0]===0x00) {
               red=mes[0]&&0x01==0x01;
               bule=mes[0]&&0x02==0x02;
