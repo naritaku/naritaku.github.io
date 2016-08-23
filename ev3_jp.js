@@ -5,7 +5,7 @@
 // My bricks are named serialBrick1 (etc)
 // Turn off the iPod/iPhone/iPad checkbox on the EV3 Bluetooth settings after pairing or else it will not work at all
 
-//This program was changed by TAKUTO NARIASAWA
+//This program kisaradukousenndeno changed by TAKUTO NARIASAWA
 
 
 
@@ -1386,7 +1386,7 @@ function(ext)
                   ['R', 'ポート %m.whichInputPort　の超音波センサの距離',                  'readDistanceSensorPort',   '1'],
                   ['R', 'remote button %m.whichInputPort',                     'readRemoteButtonPort',   '1'],
                   // ['R', 'gyro  %m.gyroMode %m.whichInputPort',                 'readGyroPort',  'angle', '1'],
-                  ['R', 'ポート %m.whichMotorIndividual　の　%m.motorInputMode',     'readFromMotor', 'A'、],
+                  ['R', 'ポート %m.whichMotorIndividual　の　%m.motorInputMode', 'A',     'readFromMotor'],
 
                   //    ['R', 'battery level',   'readBatteryLevel'],
                   //  [' ', 'reconnect', 'reconnectToDevice'],
