@@ -5,10 +5,6 @@
 // My bricks are named serialBrick1 (etc)
 // Turn off the iPod/iPhone/iPad checkbox on the EV3 Bluetooth settings after pairing or else it will not work at all
 
-//This program kisaradukousenndeno changed by TAKUTO NARIASAWA
-
-
-
 function timeStamp()
 {
     return (new Date).toISOString().replace(/z|t/gi,' ').trim();
@@ -1047,7 +1043,7 @@ function readRemoteButtonPort(port, callback)
     readIRRemoteSensor(portInt, callback);
 }
 
-function readFromMotor(mmode, which, callback)
+function readFromMotor(which, mmode, callback)
 {
     var portInt = getMotorIndex(which);
     var mode = READ_MOTOR_POSITION; // position
@@ -1356,9 +1352,9 @@ function(ext)
         readRemoteButtonPort(port, callback);
      }
 
-     ext.readFromMotor = function(mmode, which, callback)
+     ext.readFromMotor = function(which, mmode, callback)
      {
-        readFromMotor(mmode, which, callback);
+        readFromMotor(which, mmode, callback);
      }
 
      ext.readBatteryLevel = function(callback)
@@ -1366,116 +1362,29 @@ function(ext)
         readBatteryLevel(callback);
      }
 
-     ext.set_lang = function(lang) {
-       switch (lang) {
-         case 'jp':
-         var descriptor = {
-         blocks: [
-                  ['w', 'ポート%m.dualMotors モーターを %m.turnStyle　に %n 秒回す',         'steeringControl',  'B+C', 'forward', 3],
-                  [' ', '言語を %m.language に替える',                                     'set_lang',      'English'],
-                  [' ', 'ポート%m.whichMotorPort モーターをパワー %n　で回転を始める。',              'startMotors',      'B+C', 100],
-                  [' ', 'ポート%m.whichMotorPort モーターをパワー %n で %n 度回転させ、ブレーキ方法を %m.brakeCoast　にする', 'motorDegrees', 'A', 100, 360, 'brake'],
-                  [' ', 'すべてのポートのモーターをブレーキ方法 %m.brakeCoast　で止める',                       'allMotorsOff',     'brake'],
-                  ['h', 'ポート%m.whichInputPortのタッチセンサが押されたとき',       'whenButtonPressed','1'],
-                  ['h', 'when IR remote %m.buttons pressed port %m.whichInputPort', 'whenRemoteButtonPressed','Top Left', '1'],
-                  ['R', 'ポート%m.whichInputPort のタッチセンサ',                    'readTouchSensorPort',   '1'],
-                  ['w', '音階が%m.note の音を %n ミリ秒鳴らす',                    'playTone',         'C5', 500],
-                  ['w', '周波数 %n の音を %n ミリ秒鳴らす',                    'playFreq',         '262', 500],
-                  ['R', 'ポート %m.whichInputPort の　%m.lightSensorMode　モードのライトセンサ',   'readColorSensorPort',   '1', 'color'],
-                  //    ['w', 'wait until light sensor %m.whichInputPort detects black line',   'waitUntilDarkLinePort',   '1'],
-                  ['R', 'ポート %m.whichInputPort　の超音波センサの距離',                  'readDistanceSensorPort',   '1'],
-                  ['R', 'remote button %m.whichInputPort',                     'readRemoteButtonPort',   '1'],
-                  // ['R', 'gyro  %m.gyroMode %m.whichInputPort',                 'readGyroPort',  'angle', '1'],
-                  ['R', 'ポート %m.whichMotorIndividual　の　%m.motorInputMode', 'A',     'readFromMotor'],
-
-                  //    ['R', 'battery level',   'readBatteryLevel'],
-                  //  [' ', 'reconnect', 'reconnectToDevice'],
-                  ],
-         menus: {
-         whichMotorPort:   ['English', 'Japanese'],
-         whichMotorPort:   ['A', 'B', 'C', 'D', 'A+D', 'B+C'],
-         whichMotorIndividual:   ['A', 'B', 'C', 'D'],
-         dualMotors:       ['A+D', 'B+C'],
-         turnStyle:        ['forward', 'reverse', 'right', 'left'],
-         brakeCoast:       ['brake', 'coast'],
-         lightSensorMode:  ['reflected', 'ambient', 'color'],
-         motorInputMode: ['position', 'speed'],
-         gyroMode: ['angle', 'rate'],
-         note:["C4","D4","E4","F4","G4","A4","B4","C5","D5","E5","F5","G5","A5","B5","C6","D6","E6","F6","G6","A6","B6","C#4","D#4","F#4","G#4","A#4","C#5","D#5","F#5","G#5","A#5","C#6","D#6","F#6","G#6","A#6"],
-         whichInputPort: ['1', '2', '3', '4'],
-         buttons: IRbuttonNames,
-         },
-         };
-
-
-         case 'en':
-            var descriptor = {
-              blocks: [
-                  ['w', 'drive %m.dualMotors %m.turnStyle %n seconds',         'steeringControl',  'B+C', 'forward', 3],
-                  [' ', 'set language %m',                                     'set_lang',      'language'],
-                  [' ', 'start motor %m.whichMotorPort speed %n',              'startMotors',      'B+C', 100],
-                  [' ', 'rotate motor %m.whichMotorPort speed %n by %n degrees then %m.brakeCoast',              'motorDegrees',      'A', 100, 360, 'brake'],
-                  [' ', 'stop all motors %m.brakeCoast',                       'allMotorsOff',     'brake'],
-                  ['h', 'when button pressed on port %m.whichInputPort',       'whenButtonPressed','1'],
-                  ['h', 'when IR remote %m.buttons pressed port %m.whichInputPort', 'whenRemoteButtonPressed','Top Left', '1'],
-                  ['R', 'button pressed %m.whichInputPort',                    'readTouchSensorPort',   '1'],
-                  ['w', 'play note %m.note duration %n ms',                    'playTone',         'C5', 500],
-                  ['w', 'play frequency %n duration %n ms',                    'playFreq',         '262', 500],
-                  ['R', 'light sensor %m.whichInputPort %m.lightSensorMode',   'readColorSensorPort',   '1', 'color'],
-                  //    ['w', 'wait until light sensor %m.whichInputPort detects black line',   'waitUntilDarkLinePort',   '1'],
-                  ['R', 'measure distance %m.whichInputPort',                  'readDistanceSensorPort',   '1'],
-                  ['R', 'remote button %m.whichInputPort',                     'readRemoteButtonPort',   '1'],
-                  // ['R', 'gyro  %m.gyroMode %m.whichInputPort',                 'readGyroPort',  'angle', '1'],
-                  ['R', 'motor %m.motorInputMode %m.whichMotorIndividual',     'readFromMotor',   'position', 'A'],
-
-                  //    ['R', 'battery level',   'readBatteryLevel'],
-                  //  [' ', 'reconnect', 'reconnectToDevice'],
-                  ],
-              menus: {
-              whichMotorPort:   ['English', 'Japanese'],
-              whichMotorPort:   ['A', 'B', 'C', 'D', 'A+D', 'B+C'],
-              whichMotorIndividual:   ['A', 'B', 'C', 'D'],
-              dualMotors:       ['A+D', 'B+C'],
-              turnStyle:        ['forward', 'reverse', 'right', 'left'],
-              brakeCoast:       ['brake', 'coast'],
-              lightSensorMode:  ['reflected', 'ambient', 'color'],
-              motorInputMode: ['position', 'speed'],
-              gyroMode: ['angle', 'rate'],
-              note:["C4","D4","E4","F4","G4","A4","B4","C5","D5","E5","F5","G5","A5","B5","C6","D6","E6","F6","G6","A6","B6","C#4","D#4","F#4","G#4","A#4","C#5","D#5","F#5","G#5","A#5","C#6","D#6","F#6","G#6","A#6"],
-              whichInputPort: ['1', '2', '3', '4'],
-              buttons: IRbuttonNames,
-         },
-         };
-       }
-
-     var language="En"
-
-
      // Block and block menu descriptions
      var descriptor = {
      blocks: [
-              ['w', 'drive %m.dualMotors %m.turnStyle %n seconds',         'steeringControl',  'B+C', 'forward', 3],
-              [' ', 'set language %m',                                     'set_lang',      'language'],
-              [' ', 'start motor %m.whichMotorPort speed %n',              'startMotors',      'B+C', 100],
-              [' ', 'rotate motor %m.whichMotorPort speed %n by %n degrees then %m.brakeCoast',              'motorDegrees',      'A', 100, 360, 'brake'],
-              [' ', 'stop all motors %m.brakeCoast',                       'allMotorsOff',     'brake'],
-              ['h', 'when button pressed on port %m.whichInputPort',       'whenButtonPressed','1'],
-              ['h', 'when IR remote %m.buttons pressed port %m.whichInputPort', 'whenRemoteButtonPressed','Top Left', '1'],
-              ['R', 'button pressed %m.whichInputPort',                    'readTouchSensorPort',   '1'],
-              ['w', 'play note %m.note duration %n ms',                    'playTone',         'C5', 500],
-              ['w', 'play frequency %n duration %n ms',                    'playFreq',         '262', 500],
-              ['R', 'light sensor %m.whichInputPort %m.lightSensorMode',   'readColorSensorPort',   '1', 'color'],
-              //    ['w', 'wait until light sensor %m.whichInputPort detects black line',   'waitUntilDarkLinePort',   '1'],
-              ['R', 'measure distance %m.whichInputPort',                  'readDistanceSensorPort',   '1'],
-              ['R', 'remote button %m.whichInputPort',                     'readRemoteButtonPort',   '1'],
-              // ['R', 'gyro  %m.gyroMode %m.whichInputPort',                 'readGyroPort',  'angle', '1'],
-              ['R', 'motor %m.motorInputMode %m.whichMotorIndividual',     'readFromMotor',   'position', 'A'],
+                       ['w', 'ポート%m.dualMotors モーターを %m.turnStyle　に %n 秒回す',         'steeringControl',  'B+C', 'forward', 3],
+                       [' ', 'ポート%m.whichMotorPort モーターをパワー %n　で回転を始める。',              'startMotors',      'B+C', 100],
+                       [' ', 'ポート%m.whichMotorPort モーターをパワー %n で %n 度回転させ、ブレーキ方法を %m.brakeCoast　にする', 'motorDegrees', 'A', 100, 360, 'brake'],
+                       [' ', 'すべてのポートのモーターをブレーキ方法 %m.brakeCoast　で止める',                       'allMotorsOff',     'brake'],
+                       ['h', 'ポート%m.whichInputPortのタッチセンサが押されたとき',       'whenButtonPressed','1'],
+                       ['h', 'when IR remote %m.buttons pressed port %m.whichInputPort', 'whenRemoteButtonPressed','Top Left', '1'],
+                       ['R', 'ポート%m.whichInputPort のタッチセンサ',                    'readTouchSensorPort',   '1'],
+                       ['w', '音階が%m.note の音を %n ミリ秒鳴らす',                    'playTone',         'C5', 500],
+                       ['w', '周波数 %n の音を %n ミリ秒鳴らす',                    'playFreq',         '262', 500],
+                       ['R', 'ポート %m.whichInputPort の　%m.lightSensorMode　モードのライトセンサ',   'readColorSensorPort',   '1', 'color'],
+                       //    ['w', 'wait until light sensor %m.whichInputPort detects black line',   'waitUntilDarkLinePort',   '1'],
+                       ['R', 'ポート %m.whichInputPort　の超音波センサの距離',                  'readDistanceSensorPort',   '1'],
+                       ['R', 'remote button %m.whichInputPort',                     'readRemoteButtonPort',   '1'],
+                       // ['R', 'gyro  %m.gyroMode %m.whichInputPort',                 'readGyroPort',  'angle', '1'],
+                       ['R', 'ポート %m.whichMotorIndividual　の　%m.motorInputMode', 'A',     'readFromMotor'],
 
-              //    ['R', 'battery level',   'readBatteryLevel'],
-              //  [' ', 'reconnect', 'reconnectToDevice'],
-              ],
+                       //    ['R', 'battery level',   'readBatteryLevel'],
+                       //  [' ', 'reconnect', 'reconnectToDevice'],
+                       ],
      menus: {
-     whichMotorPort:   ['English', 'Japanese'],
      whichMotorPort:   ['A', 'B', 'C', 'D', 'A+D', 'B+C'],
      whichMotorIndividual:   ['A', 'B', 'C', 'D'],
      dualMotors:       ['A+D', 'B+C'],
