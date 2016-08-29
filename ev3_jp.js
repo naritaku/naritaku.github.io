@@ -101,7 +101,7 @@ var TONE_QUERY = "TONE_QUERY";
 var UIDRAW_QUERY = "UIDRAW_QUERY";
 var SYSTEM_COMMAND = "SYSTEM_COMMAND";
 
-var frequencies = { "C4" : 262, "D4" : 294, "E4" : 330, "F4" : 349, "G4" : 392, "A4" : 440, "B4" : 494, "C5" : 523, "D5" : 587, "E5" : 659, "F5" : 698, "G5" : 784, "A5" : 880, "B5" : 988, "C6" : 1047, "D6" : 1175, "E6" : 1319, "F6" : 1397, "G6" : 1568, "A6" : 1760, "B6" : 1976, "C#4" : 277, "D#4" : 311, "F#4" : 370, "G#4" : 415, "A#4" : 466, "C#5" : 554, "D#5" : 622, "F#5" : 740, "G#5" : 831, "A#5" : 932, "C#6" : 1109, "D#6" : 1245, "F#6" : 1480, "G#6" : 1661, "A#6" : 1865 };
+var frequencies = { "低いド" : 262, "低いレ" : 294, "低いミ" : 330, "低いファ" : 349, "低いソ" : 392, "低いラ" : 440, "低いシ" : 494, "真ん中のド" : 523, "真ん中のレ" : 587, "真ん中のミ" : 659, "真ん中のファ" : 698, "真ん中のソ" : 784, "真ん中のラ" : 880, "真ん中のシ" : 988, "高いド" : 1047, "高いレ" : 1175, "高いミ" : 1319, "高いファ" : 1397, "高いソ" : 1568, "高いラ" : 1760, "高いシ" : 1976, "低いド#" : 277, "低いレ#" : 311, "低いファ#" : 370, "低いソ#4" : 415, "低いラ#" : 466, "真ん中のド#" : 554, "真ん中のレ#" : 622, "真ん中のファ#" : 740, "真ん中のソ#" : 831, "真ん中のラ#" : 932, "高いド#" : 1109, 高い"レ#" : 1245, "高いファ#" : 1480, "高いソ#" : 1661, "高いラ#" : 1865 };
 
 var colors = [ "none", "black", "blue", "green", "yellow", "red", "white"];
 
@@ -703,7 +703,7 @@ driveCallback = 0;
 
 function howStopCode(how)
 {
-    if (how == 'brake')
+    if (how == 'ロック')
         return 1;
     else
         return 0;
@@ -902,6 +902,7 @@ function motorDegrees(which, speed, degrees, howStop)
 
 function playTone(tone, duration, callback)
 {
+    duration/=1000;
     var freq = frequencies[tone];
     console_log("playTone " + tone + " duration: " + duration + " freq: " + freq);
     var volume = 100;
@@ -916,6 +917,7 @@ function playTone(tone, duration, callback)
 
 function playFreq(freq, duration, callback)
 {
+    duration/=1000;
     console_log("playFreq duration: " + duration + " freq: " + freq);
     var volume = 100;
     var volString = getPackedOutputHexString(volume, 1);
@@ -938,19 +940,19 @@ function steeringControl(ports, what, duration, callback)
     clearDriveTimer();
     var defaultSpeed = 50;
     var motorCommand = null;
-    if (what == 'forward')
+    if (what == '前進')
     {
         motorCommand = motor(ports, defaultSpeed);
     }
-    else if (what == 'reverse')
+    else if (what == '後進')
     {
         motorCommand = motor(ports, -1 * defaultSpeed);
     }
-    else if (what == 'right')
+    else if (what == '右折')
     {
         motorCommand = motor2(ports, defaultSpeed);
     }
-    else if (what == 'left')
+    else if (what == '左折')
     {
         motorCommand = motor2(ports, -1 * defaultSpeed);
     }
@@ -987,8 +989,8 @@ function readTouchSensorPort(port, callback)
 function readColorSensorPort(port, mode, callback)
 {
     var modeCode = AMBIENT_INTENSITY;
-    if (mode == 'reflected') { modeCode = REFLECTED_INTENSITY; }
-    if (mode == 'color') { modeCode = COLOR_VALUE; }
+    if (mode == '反射光') { modeCode = REFLECTED_INTENSITY; }
+    if (mode == '色') { modeCode = COLOR_VALUE; }
     if (mode == 'RGBcolor') { modeCode = COLOR_RAW_RGB; }
 
     var portInt = parseInt(port) - 1;
@@ -1047,7 +1049,7 @@ function readFromMotor(which, mmode, callback)
 {
     var portInt = getMotorIndex(which);
     var mode = READ_MOTOR_POSITION; // position
-    if (mmode == 'speed')
+    if (mmode == '速度')
         mode = READ_MOTOR_SPEED;
 
     readFromAMotor(portInt, READ_FROM_MOTOR, mode, callback);
@@ -1365,21 +1367,21 @@ function(ext)
      // Block and block menu descriptions
      var descriptor = {
      blocks: [
-                       ['w', 'ポート%m.dualMotors モーターを %m.turnStyle に%n 秒回す',         'steeringControl',  'B+C', 'forward', 3],
-                       [' ', 'ポート%m.whichMotorPort モーターをパワー %n で回転を始める',              'startMotors',      'B+C', 100],
-                       [' ', 'ポート%m.whichMotorPort モーターをパワー %n で%n 度回転させ、%m.brakeCoasts で止める', 'motorDegrees', 'A', 100, 360, 'brake'],
-                       [' ', 'すべてのポートのモーターを%m.brakeCoast で止める',                       'allMotorsOff',     'brake'],
+                       ['w', '%m.dualMotors モーターを %m.turnStyle に%n 秒回す',         'steeringControl',  'B+C', '前進', 3],
+                       [' ', '%m.whichMotorPort モーターをパワー %n で回転を始める',              'startMotors',      'B+C', 100],
+                       [' ', '%m.whichMotorPort モーターをパワー %n で%n 度回転させ、%m.brakeCoasts 状態で止める', 'motorDegrees', 'A', 100, 360, 'ロック'],
+                       [' ', 'すべてののモーターを%m.brakeCoast で止める',                       'allMotorsOff',     'ロック'],
                        ['h', 'ポート%m.whichInputPort のタッチセンサが押されたとき',       'whenButtonPressed','1'],
                        ['h', 'when IR remote %m.buttons pressed port %m.whichInputPort', 'whenRemoteButtonPressed','Top Left', '1'],
                        ['R', 'ポート%m.whichInputPort のタッチセンサ',                    'readTouchSensorPort',   '1'],
-                       ['w', '音階が%m.note の音を %n ミリ秒鳴らす',                    'playTone',         'C5', 500],
-                       ['w', '周波数%n の音を %n ミリ秒鳴らす',                    'playFreq',         '262', 500],
-                       ['R', 'ポート%m.whichInputPort の%m.lightSensorMode モードのライトセンサ',   'readColorSensorPort',   '1', 'color'],
+                       ['w', '音階が%m.note の音を%n 秒鳴らす',                    'playTone',         '真ん中のド', 500],
+                       ['w', '周波数%n の音を%n 秒鳴らす',                    'playFreq',         '262', 500],
+                       ['R', 'ポート%m.whichInputPort のカラーセンサの%m.lightSensorMode',   'readColorSensorPort',   '1', '色'],
                        //    ['w', 'wait until light sensor %m.whichInputPort detects black line',   'waitUntilDarkLinePort',   '1'],
                        ['R', 'ポート%m.whichInputPort の超音波センサの距離',                  'readDistanceSensorPort',   '1'],
                        ['R', 'remote button %m.whichInputPort',                     'readRemoteButtonPort',   '1'],
                        // ['R', 'gyro  %m.gyroMode %m.whichInputPort',                 'readGyroPort',  'angle', '1'],
-                       ['R', 'ポート%m.whichMotorIndividual の%m.motorInputMode',  'readFromMotor', 'A',  'position'],
+                       ['R', '%m.whichMotorIndividual モーターの%m.motorInputMode',  'readFromMotor', 'A',  '角度'],
 
                        //    ['R', 'battery level',   'readBatteryLevel'],
                        //  [' ', 'reconnect', 'reconnectToDevice'],
@@ -1388,12 +1390,12 @@ function(ext)
      whichMotorPort:   ['A', 'B', 'C', 'D', 'A+D', 'B+C'],
      whichMotorIndividual:   ['A', 'B', 'C', 'D'],
      dualMotors:       ['A+D', 'B+C'],
-     turnStyle:        ['forward', 'reverse', 'right', 'left'],
-     brakeCoast:       ['brake', 'coast'],
-     lightSensorMode:  ['reflected', 'ambient', 'color'],
-     motorInputMode: ['position', 'speed'],
+     turnStyle:        ['前進', '後進', '右折', '左折'],
+     brakeCoast:       ['ロック', '自由な'],
+     lightSensorMode:  ['反射光', '周囲の明るさ', '色'],
+     motorInputMode: ['角度', '速度'],
      gyroMode: ['angle', 'rate'],
-     note:["C4","D4","E4","F4","G4","A4","B4","C5","D5","E5","F5","G5","A5","B5","C6","D6","E6","F6","G6","A6","B6","C#4","D#4","F#4","G#4","A#4","C#5","D#5","F#5","G#5","A#5","C#6","D#6","F#6","G#6","A#6"],
+     note:[ "低いド" , "低いレ" , "低いミ", "低いファ" , "低いソ" , "低いラ" , "低いシ" , "真ん中のド" , "真ん中のレ" , "真ん中のミ" , "真ん中のファ", "真ん中のソ" , "真ん中のラ" , "真ん中のシ", "高いド" , "高いレ" , "高いミ" , "高いファ" , "高いソ" , "高いラ" , "高いシ" , "低いド#" , "低いレ#" , "低いファ#", "低いソ#4" , "低いラ#", "真ん中のド#", "真ん中のレ#", "真ん中のファ#" , "真ん中のソ#", "真ん中のラ#", "高いド#", "高いレ#", "高いファ#", "高いソ#", "高いラ#"],
      whichInputPort: ['1', '2', '3', '4'],
      buttons: IRbuttonNames,
      },
