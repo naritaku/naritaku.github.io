@@ -1366,7 +1366,7 @@ function(ext)
      var descriptor = {
      blocks: [
                        ['w', 'ポート%m.dualMotors モーターを %m.turnStyle に%n 秒回す',         'steeringControl',  'B+C', 'forward', 3],
-                       [' ', 'ポート%m.whichMotorPort モーターをパワー %n で回転を始める。',              'startMotors',      'B+C', 100],
+                       [' ', 'ポート%m.whichMotorPort モーターをパワー %n で回転を始める',              'startMotors',      'B+C', 100],
                        [' ', 'ポート%m.whichMotorPort モーターをパワー %n で%n 度回転させ、%m.brakeCoasts で止める', 'motorDegrees', 'A', 100, 360, 'brake'],
                        [' ', 'すべてのポートのモーターを%m.brakeCoast で止める',                       'allMotorsOff',     'brake'],
                        ['h', 'ポート%m.whichInputPort のタッチセンサが押されたとき',       'whenButtonPressed','1'],
@@ -1379,7 +1379,7 @@ function(ext)
                        ['R', 'ポート %m.whichInputPort の超音波センサの距離',                  'readDistanceSensorPort',   '1'],
                        ['R', 'remote button %m.whichInputPort',                     'readRemoteButtonPort',   '1'],
                        // ['R', 'gyro  %m.gyroMode %m.whichInputPort',                 'readGyroPort',  'angle', '1'],
-                       ['R', 'ポート %m.whichMotorIndividual　の　%m.motorInputMode', 'A',  'position',  'readFromMotor'],
+                       ['R', 'ポート %m.whichMotorIndividual の %m.motorInputMode', 'A',  'position',  'readFromMotor'],
 
                        //    ['R', 'battery level',   'readBatteryLevel'],
                        //  [' ', 'reconnect', 'reconnectToDevice'],
