@@ -6,12 +6,9 @@ var csvName= 'test.csv';
        return {status: 2, msg: 'Ready'};
    };
    ext.DL_csv = function() {
-     var blob = new Blob([csvContent]);
-     var url = window.URL || window.webkitURL;
-     var blobURL = url.createObjectURL(blob);
      var a = document.createElement('a');
      a.download = csvName;
-     a.href = blobURL;
+     a.href = 'data:application/octet-stream,'+encodeURIComponent(csvContent);
      a.click();
     };
    // Block and block menu descriptions
