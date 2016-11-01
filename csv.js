@@ -1,5 +1,5 @@
 var csvContent = 'あいうえお,かきくけこ,さしすせそ';
-var csvName="test.csv"
+var csvName= 'test.csv';
 (function(ext) {
    ext._shutdown = function() {};
    ext._getStatus = function() {
