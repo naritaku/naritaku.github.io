@@ -1,19 +1,18 @@
-var csv_content = 'あいうえお,かきくけこ,さしすせそ';
-
+var csvContent = 'あいうえお,かきくけこ,さしすせそ';
+var csvName="test.csv"
 (function(ext) {
    ext._shutdown = function() {};
    ext._getStatus = function() {
        return {status: 2, msg: 'Ready'};
    };
    ext.DL_csv = function() {
-       var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-       var blob = new Blob([ bom, csv_content ], { "type" : "text/csv" });
-       if (window.navigator.msSaveBlob) {
-          window.navigator.msSaveBlob(blob, "test.csv");
-          window.navigator.msSaveOrOpenBlob(blob, "test.csv");
-       }else{
-          document.getElementById("download").href = window.URL.createObjectURL(blob);
-       }
+     var blob = new Blob([csvContent]);
+     var url = window.URL || window.webkitURL;
+     var blobURL = url.createObjectURL(blob);
+     var a = document.createElement('a');
+     a.download = csvName;
+     a.href = blobURL;
+     a.click();
     };
    // Block and block menu descriptions
     var descriptor = {
