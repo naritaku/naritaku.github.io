@@ -17,9 +17,10 @@ new (function() {
 
         poller = setInterval(function() {
             input = device.read(48);
+            console.log(input);
         }, 10);
 
-        setInterval(function() { console.log(input); }, 100);
+//        setInterval(function() { console.log(input); }, 100);
     };
 
     ext._deviceRemoved = function(dev) {
