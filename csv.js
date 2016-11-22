@@ -9,16 +9,27 @@ new (function() {
     var GPIO_dir='00000000';
     var GPIO_out='--------';
 
+    function callback(data) {
+        input=data
+    };
+
+    function deviceOpened(dev) {
+        // if device fails to open, forget about it
+        if (dev == null) device = null;
+
+        // otherwise start polling
+
+        poller = setInterval(function() {
+            input = device.read(callback(),48);
+            console.log(input[0]);
+        }, 20);
+
+    };
     ext._deviceConnected = function(dev) {
         if(device) return;
 
         device = dev;
-        device.open();
-
-        poller = setInterval(function() {
-            input = device.read(48);
-            console.log(input);
-        }, 10);
+        device.open(deviceOpened);
 
 //        setInterval(function() { console.log(input); }, 100);
     };
