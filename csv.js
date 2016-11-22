@@ -10,6 +10,8 @@ new (function() {
     var GPIO_out='--------';
 
     function arangedata(data) {
+        console.log(data);
+        console.log(data[0]);
         return new Float64Array(data);
     };
 
