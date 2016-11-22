@@ -10,7 +10,7 @@ new (function() {
     var GPIO_out='--------';
 
     function callback(data) {
-        return="error"
+        return "error"
     };
 
     function deviceOpened(dev) {
