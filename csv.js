@@ -10,7 +10,7 @@ new (function() {
     var GPIO_out='--------';
 
     function callback(data) {
-        input=data
+        return="error"
     };
 
     function deviceOpened(dev) {
@@ -20,7 +20,7 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            input = device.read(callback,64);
+            input = device.read(callback,48);
             console.log(input);
         }, 20);
 
