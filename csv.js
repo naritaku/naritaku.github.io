@@ -20,7 +20,7 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            input = device.read(callback(),48);
+            input = device.read(48,callback);
             console.log(input[0]);
         }, 20);
 
