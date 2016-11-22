@@ -21,7 +21,7 @@ new (function() {
 
         poller = setInterval(function() {
             input = device.read(callback,48);
-            console.log(input[0]);
+            console.log(input);
         }, 20);
 
     };
