@@ -9,7 +9,7 @@ new (function() {
     var GPIO_dir='00000000';
     var GPIO_out='--------';
 
-    function callback(data) {
+    function arangedata(data) {
         return new Float64Array(data);
     };
 
@@ -20,7 +20,7 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            input =  device.read(callback,48);
+            input =  device.read(arangedata,48);
             console.log(input);
         }, 20);
 
