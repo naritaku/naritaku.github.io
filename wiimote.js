@@ -4,10 +4,15 @@ new (function() {
     var input = null;
     var poller = null;
     var ext = this;
-
-    function arangedata(data) {
+    function write_callback(data) {
+      console.log(data);
+      console.log(data[0]);
+      return new Float64Array(data);
+    };
+    function read_callback(data) {
         console.log(data);
-        console.log(data[0]);
+        console.log(data[1]);
+        console.log(data[2]);
         return new Float64Array(data);
     };
 
@@ -18,7 +23,8 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            input =  device.read(arangedata,48);
+            device.write(0x1500);
+            input =  device.read(read_callback,48);
             console.log(input);
         }, 20);
 
