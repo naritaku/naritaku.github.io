@@ -10,11 +10,12 @@ new (function() {
     function read_callback(data) {
       console.log(data);
       btn_arr = new Uint8Array(data);
+      console.log(btn_arr);
         return btn_arr;
     };
 
     function btn_update(data) {
-    /*
+      if (data.length !== 0){
         btn_state[0]=data[2]&0X08/0X08;
         btn_state[1]=data[2]&0X04/0X04;
         btn_state[2]=data[1]&0X08/0X08;
@@ -26,7 +27,7 @@ new (function() {
         btn_state[8]=data[1]&0X10/0X10;
         btn_state[9]=data[2]&0X10/0X10;
         btn_state[10]=data[2]&0X80/0X80;
-        */
+      }  
     };
 
     function deviceOpened(dev) {
