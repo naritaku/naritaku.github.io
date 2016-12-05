@@ -32,7 +32,7 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            device.write(0x1500);
+            device.write(0xA21500);
             var data =  device.read(read_callback,48);
             btn_update(data);
         }, 20);
@@ -101,7 +101,7 @@ new (function() {
     }
     var descriptor = {
         blocks: [
-            ['r', '%m.button value','send_button'],
+            ['r', '%m.button value','send_button','a'],
 
         ],
         menus: {
