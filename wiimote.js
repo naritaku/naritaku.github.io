@@ -8,10 +8,12 @@ new (function() {
     var ext = this;
 
     function read_callback(data) {
+      console.log(data)
         return data;
     };
 
     function btn_update(data) {
+    /*
         btn_state[0]=data[2]&0X08/0X08;
         btn_state[1]=data[2]&0X04/0X04;
         btn_state[2]=data[1]&0X08/0X08;
@@ -23,6 +25,7 @@ new (function() {
         btn_state[8]=data[1]&0X10/0X10;
         btn_state[9]=data[2]&0X10/0X10;
         btn_state[10]=data[2]&0X80/0X80;
+        */
     };
 
     function deviceOpened(dev) {
