@@ -8,7 +8,6 @@ new (function() {
     var ext = this;
 
     function read_callback(data) {
-      console.log(data);
       btn_arr = new Uint8Array(data);
       console.log(btn_arr);
         return btn_arr;
@@ -27,7 +26,7 @@ new (function() {
         btn_state[8]=data[1]&0X10/0X10;
         btn_state[9]=data[2]&0X10/0X10;
         btn_state[10]=data[2]&0X80/0X80;
-      }  
+      }
     };
 
     function deviceOpened(dev) {
