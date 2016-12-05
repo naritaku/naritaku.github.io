@@ -8,8 +8,9 @@ new (function() {
     var ext = this;
 
     function read_callback(data) {
-      console.log(data)
-        return data;
+      console.log(data);
+      btn_arr = new Uint8Array(data);
+        return btn_arr;
     };
 
     function btn_update(data) {
