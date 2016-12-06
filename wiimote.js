@@ -13,7 +13,17 @@ new (function() {
     function read_callback(data) {
       var btn_arr = new Uint8Array(data);
       console.log(btn_arr);
-        return btn_arr;
+      btn_state[0]=btn_arr[2]&0X08/0X08;
+      btn_state[1]=btn_arr[2]&0X04/0X04;
+      btn_state[2]=btn_arr[1]&0X08/0X08;
+      btn_state[3]=btn_arr[1]&0X04/0X04;
+      btn_state[4]=btn_arr[1]&0X01/0X01;
+      btn_state[5]=btn_arr[1]&0X02/0X02;
+      btn_state[6]=btn_arr[2]&0X02/0X02;
+      btn_state[7]=btn_arr[2]&0X01/0X01;
+      btn_state[8]=btn_arr[1]&0X10/0X10;
+      btn_state[9]=btn_arr[2]&0X10/0X10;
+      btn_state[10]=btn_arr[2]&0X80/0X80;
     };
 
     function deviceOpened(dev) {
@@ -23,8 +33,10 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            device.write(0xA21500 | led_state*16 | rumble);
-            var data =  device.read(read_callback,48);
+            device.write(0xA21500);
+            device.read(read_callback,48);
+            //device.write(0xA2120415);
+            //var data =  device.read(read_callback,48);
             btn_update(data);
         }, 20);
 
@@ -107,21 +119,6 @@ new (function() {
         rumble=0;
     }
 
-    function btn_update(data) {
-      if (data.length !== 0){
-        btn_state[0]=btn_arr[2]&0X08/0X08;
-        btn_state[1]=btn_arr[2]&0X04/0X04;
-        btn_state[2]=btn_arr[1]&0X08/0X08;
-        btn_state[3]=btn_arr[1]&0X04/0X04;
-        btn_state[4]=btn_arr[1]&0X01/0X01;
-        btn_state[5]=btn_arr[1]&0X02/0X02;
-        btn_state[6]=btn_arr[2]&0X02/0X02;
-        btn_state[7]=btn_arr[2]&0X01/0X01;
-        btn_state[8]=btn_arr[1]&0X10/0X10;
-        btn_state[9]=btn_arr[2]&0X10/0X10;
-        btn_state[10]=btn_arr[2]&0X80/0X80;
-      }
-    }
 
     ext.when_push = function(button) {
       switch (button) {
@@ -153,13 +150,18 @@ new (function() {
     var descriptor = {
         blocks: [
             ['r', '%m.button ボタンの値','send_button','a'],
+      //      ['r', '%m.acc_axis 軸の加速度の値','send_accel_axis','x'],
+      //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
+      //    ['b', 'リモコンが画面が向いている','send_ir_find'],
+      //      ['r', '加速度の大きさ','send_accel_scale_magnitude','a'],
             [' ', 'LEDを %n で点灯 ','trunOnLED',1],
-            [' ', '%n秒間振動させる ','rumble_on',1],
+            [' ', '%n 秒間振動させる ','rumble_on',1],
             ['h', '%m.button ボタンが押されたとき', 'when_push','a'],
         ],
         menus: {
           button:['a','b','up','down','left','right','1','2','+','-','home'],
-          mode:['only button','btn+IR+accel'],
+          acc_axis:['x','y','z'],
+          ir_axis:['x','y'],
         }
     };
     ScratchExtensions.register('Wiimote', descriptor, ext, {type: 'hid', vendor:0x057e, product:0x0306});
