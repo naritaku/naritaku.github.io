@@ -37,7 +37,6 @@ new (function() {
             device.read(read_callback,48);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
-            btn_update(data);
         }, 20);
 
     };
