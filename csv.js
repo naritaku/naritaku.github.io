@@ -18,17 +18,12 @@ new (function() {
     function deviceOpened(dev) {
         // if device fails to open, forget about it
         if (dev == null) device = null;
-
         // otherwise start polling
-
         poller = setInterval(function() {
             device.write(0X03);
             var data =  device.read(read_callback,48);
             GPIO_update(data);
         }, 20);
-
-        };
-
     };
     ext._deviceConnected = function(dev) {
         if(device) return;
