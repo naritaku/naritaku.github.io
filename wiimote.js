@@ -12,18 +12,19 @@ new (function() {
 
     function read_callback(data) {
       var btn_arr = new Uint8Array(data);
-      console.log(btn_arr);
-      btn_state[0]=btn_arr[2]&0X08/0X08;
-      btn_state[1]=btn_arr[2]&0X04/0X04;
-      btn_state[2]=btn_arr[1]&0X08/0X08;
-      btn_state[3]=btn_arr[1]&0X04/0X04;
-      btn_state[4]=btn_arr[1]&0X01/0X01;
-      btn_state[5]=btn_arr[1]&0X02/0X02;
-      btn_state[6]=btn_arr[2]&0X02/0X02;
-      btn_state[7]=btn_arr[2]&0X01/0X01;
-      btn_state[8]=btn_arr[1]&0X10/0X10;
-      btn_state[9]=btn_arr[2]&0X10/0X10;
-      btn_state[10]=btn_arr[2]&0X80/0X80;
+      console.log(btn_arr[1]);
+      console.log(btn_arr[2]);
+      btn_state[0]=(btn_arr[2]&0X08)/0X08;
+      btn_state[1]=(btn_arr[2]&0X04)/0X04;
+      btn_state[2]=(btn_arr[1]&0X08)/0X08;
+      btn_state[3]=(btn_arr[1]&0X04)/0X04;
+      btn_state[4]=(btn_arr[1]&0X01)/0X01;
+      btn_state[5]=(btn_arr[1]&0X02)/0X02;
+      btn_state[6]=(btn_arr[2]&0X02)/0X02;
+      btn_state[7]=(btn_arr[2]&0X01)/0X01;
+      btn_state[8]=(btn_arr[1]&0X10)/0X10;
+      btn_state[9]=(btn_arr[2]&0X10)/0X10;
+      btn_state[10]=(btn_arr[2]&0X80)/0X80;
     };
 
     function deviceOpened(dev) {
