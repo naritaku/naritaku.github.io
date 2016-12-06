@@ -9,10 +9,10 @@ new (function() {
     var GPIO_dir='00000000';
     var GPIO_out='--------';
 
-    function arangedata(data) {
-        console.log(data);
-        console.log(data[0]);
-        return new Float64Array(data);
+    function read_callback(data) {
+      var btn_arr = new Uint8Array(data);
+      console.log(btn_arr);
+      return btn_arr;
     };
 
     function deviceOpened(dev) {
@@ -22,9 +22,12 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            input =  device.read(arangedata,48);
-            console.log(input);
+            device.write(0X03);
+            var data =  device.read(read_callback,48);
+            GPIO_update(data);
         }, 20);
+
+        };
 
     };
     ext._deviceConnected = function(dev) {
