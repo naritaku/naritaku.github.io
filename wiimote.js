@@ -13,7 +13,7 @@ new (function() {
     function read_callback(data) {
       var btn_arr = new Uint8Array(data);
       console.log(btn_arr[1]);
-      console.log(btn_arr[2]);
+      console.log((btn_arr[2]&0X08)/0X08);
       btn_state[0]=(btn_arr[2]&0X08)/0X08;
       btn_state[1]=(btn_arr[2]&0X04)/0X04;
       btn_state[2]=(btn_arr[1]&0X08)/0X08;
@@ -25,6 +25,8 @@ new (function() {
       btn_state[8]=(btn_arr[1]&0X10)/0X10;
       btn_state[9]=(btn_arr[2]&0X10)/0X10;
       btn_state[10]=(btn_arr[2]&0X80)/0X80;
+      console.log((btn_arr[2]&0X08)/0X08);
+      console.log(btn_stare[0]);
     };
 
     function deviceOpened(dev) {
@@ -35,7 +37,7 @@ new (function() {
 
         poller = setInterval(function() {
             device.write(0xA21500);
-            device.read(read_callback,48);
+            device.read(read_callback,20);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
         }, 20);
