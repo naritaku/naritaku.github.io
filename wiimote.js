@@ -79,8 +79,11 @@ new (function() {
     // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
 //    function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
     ext.send_button = function(buttton) {
+      console.log(button);
+      console.log(btn_state[0]);
       switch (button) {
         case 'a':
+          console.log("a check")
           return(btn_state[0]);
         case 'b':
           return(btn_state[1]);
@@ -102,6 +105,8 @@ new (function() {
             return(btn_state[9]);
         case 'home':
             return(btn_state[10]);
+        default:
+            return("err");
       }
     }
 
