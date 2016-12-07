@@ -26,7 +26,7 @@ new (function() {
       btn_state[9]=(btn_arr[2]&0X10)/0X10;
       btn_state[10]=(btn_arr[2]&0X80)/0X80;
       console.log((btn_arr[2]&0X08)/0X08);
-      console.log(btn_stare[0]);
+      console.log(btn_state[0]);
     };
 
     function deviceOpened(dev) {
