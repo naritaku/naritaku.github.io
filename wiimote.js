@@ -2,7 +2,7 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var led_state=1;
 var rumble=0;
-
+var mode = new Uint8Array( 0xA2,0x12,0x04,0x33 );
 var dateMode=15;//states check
 new (function() {
     var device = null;
@@ -29,7 +29,7 @@ new (function() {
     function deviceOpened(dev) {
         // if device fails to open, forget about it
         if (dev == null) device = null;
-        device.write(0x120433);
+        device.write(mode);
         // otherwise start polling
 
         poller = setInterval(function() {
@@ -118,12 +118,12 @@ new (function() {
 
     function rumble_on(rumble_time) {
         rumble=1;
-        device.write(0x1101|led_state*0x10);
+        device.write(0xA21101);
         setTimeout(rumble_off, 1000*rumble_time);
     }
 
     function rumble_off() {
-      device.write(0xa21100|led_state*0x10);
+      device.write(0xA21100);
       rumble=0;
     }
 
