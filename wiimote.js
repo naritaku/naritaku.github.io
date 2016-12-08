@@ -12,6 +12,7 @@ new (function() {
 
     function read_callback(data) {
       var btn_arr = new Uint8Array(data);
+      console.log(btn_arr);
       btn_state[0]=(btn_arr[2]&0X08)/0X08;
       btn_state[1]=(btn_arr[2]&0X04)/0X04;
       btn_state[2]=(btn_arr[1]&0X08)/0X08;
