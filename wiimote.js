@@ -34,7 +34,7 @@ new (function() {
 
         poller = setInterval(function() {
 
-            device.read(read_callback,48);
+            device.read(read_callback,64);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
         }, 62.5);
@@ -112,16 +112,19 @@ new (function() {
     {
         if ( LED>= 0 && LED<=15){
           led_state=Math.round(LED)
+          device.write(0xa21100 | led_state*0x10 | rumble);
         }
     }
 
     function rumble_on(rumble_time) {
         rumble=1;
+        device.write(0xa21101|led_state*0x10);
         setTimeout(rumble_off, 1000*rumble_time);
     }
 
     function rumble_off() {
-        rumble=0;
+      device.write(0xa21100|led_state*0x10);
+      rumble=0;
     }
 
 
