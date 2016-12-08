@@ -112,7 +112,10 @@ new (function() {
     {
         if ( LED>= 0 && LED<=15){
           led_state=Math.round(LED)
-          device.write(0x1100 | led_state*0x10 | rumble);
+          console.log(led_state)
+          console.log("%f",0xA21100 | led_state*0x10)
+
+          device.write(0xA21100 | led_state*0x10);
         }
     }
 
