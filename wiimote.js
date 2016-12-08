@@ -29,7 +29,7 @@ new (function() {
     function deviceOpened(dev) {
         // if device fails to open, forget about it
         if (dev == null) device = null;
-        device.write(mode);
+        device.write(0xA2120433);
         // otherwise start polling
 
         poller = setInterval(function() {
