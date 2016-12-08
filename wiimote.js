@@ -33,7 +33,7 @@ new (function() {
 
         poller = setInterval(function() {
 
-            device.read(read_callback,19);
+            device.read(read_callback,48);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
         }, 62.5);
