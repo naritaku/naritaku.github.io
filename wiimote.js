@@ -28,15 +28,15 @@ new (function() {
     function deviceOpened(dev) {
         // if device fails to open, forget about it
         if (dev == null) device = null;
-
+        device.write(0xA2120433);
         // otherwise start polling
 
         poller = setInterval(function() {
-            device.write(0xA21500);
-            device.read(read_callback,20);
+
+            device.read(read_callback,19);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
-        }, 20);
+        }, 62.5);
 
     };
     ext._deviceConnected = function(dev) {
@@ -102,7 +102,7 @@ new (function() {
         case 'home':
             return(btn_state[10]);
         default:
-        
+
             return("err");
       }
     }
