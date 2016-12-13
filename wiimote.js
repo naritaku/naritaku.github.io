@@ -2,7 +2,6 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var led_state=1;
 var rumble=0;
-var mode = new Uint8Array( 0xA2,0x12,0x04,0x33 );
 var dateMode=15;//states check
 new (function() {
     var device = null;
@@ -29,11 +28,10 @@ new (function() {
     function deviceOpened(dev) {
         // if device fails to open, forget about it
         if (dev == null) device = null;
-        device.write(0xA2120433);
         // otherwise start polling
 
         poller = setInterval(function() {
-
+            device.write(0xa21500);
             device.read(read_callback,64);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
