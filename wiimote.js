@@ -34,6 +34,8 @@ new (function() {
         poller = setInterval(function() {
             write_data=0xA2120431;
             write_data >>> 0;
+            console.log(write_data);
+            console.log(new Uint8Array(write_data));
             device.write(write_data);
             device.read(read_callback,64);
 
