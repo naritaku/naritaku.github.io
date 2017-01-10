@@ -3,7 +3,7 @@ var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var led_state=1;
 var rumble=0;
 var dateMode=15;//states check
-var write_data;
+var write_data=0;
 new (function() {
     var device = null;
     var input = null;
@@ -82,7 +82,7 @@ new (function() {
       console.log(btn_state[0]);
       switch (button) {
         case 'a':
-          console.log("a check")
+          console.log("a check");
           return(btn_state[0]);
         case 'b':
           return(btn_state[1]);
@@ -111,10 +111,9 @@ new (function() {
 
     ext.trunOnLED = function(LED) {
         if ( LED>= 0 && LED<=15){
-          led_state=Math.round(LED)
-          console.log(led_state)
-          console.log("%f",0xA21100 | led_state*0x10)
-
+          led_state=Math.round(LED);
+          console.log(led_state);
+          console.log("%f",0xA21100 | led_state*0x10);
           device.write(0xA21100 | led_state*0x10);
         }
     }
