@@ -110,7 +110,6 @@ new (function() {
     }
 
     ext.trunOnLED = function(LED) {
-    {
         if ( LED>= 0 && LED<=15){
           led_state=Math.round(LED)
           console.log(led_state)
