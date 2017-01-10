@@ -3,6 +3,7 @@ var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var led_state=1;
 var rumble=0;
 var dateMode=15;//states check
+var write_data;
 new (function() {
     var device = null;
     var input = null;
@@ -31,8 +32,11 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            device.write(0xa21500);
+            write_data=0xA2120431;
+            write_data >>> 0;
+            device.write(write_data);
             device.read(read_callback,64);
+
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
         }, 62.5);
@@ -73,7 +77,7 @@ new (function() {
 
     // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
 //    function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
-    ext.send_button = function(buttton) {
+    ext.get_button = function(buttton) {
       console.log(button);
       console.log(btn_state[0]);
       switch (button) {
@@ -101,12 +105,11 @@ new (function() {
         case 'home':
             return(btn_state[10]);
         default:
-
             return("err");
       }
     }
 
-    function trunOnLED(LED)
+    ext.trunOnLED = function(LED) {
     {
         if ( LED>= 0 && LED<=15){
           led_state=Math.round(LED)
@@ -117,13 +120,13 @@ new (function() {
         }
     }
 
-    function rumble_on(rumble_time) {
+    ext.rumble_on = function() {
         rumble=1;
         device.write(0xA21101);
         setTimeout(rumble_off, 1000*rumble_time);
     }
 
-    function rumble_off() {
+    ext.rumble_off = function() {
       device.write(0xA21100);
       rumble=0;
     }
@@ -158,7 +161,7 @@ new (function() {
 
     var descriptor = {
         blocks: [
-            ['r', '%m.button ボタンの値','send_button','a'],
+            ['r', '%m.button ボタンの値','get_button','a'],
       //      ['r', '%m.acc_axis 軸の加速度の値','send_accel_axis','x'],
       //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
