@@ -12,7 +12,7 @@ var led_rumble=[0x11,0x00];
 
     function read_callback(data) {
       var btn_arr = new Uint8Array(data);
-      console.log(btn_state);
+      console.log(btn_arr);
       btn_state[0]=(btn_arr[2]&0X08)/0X08;
       btn_state[1]=(btn_arr[2]&0X04)/0X04;
       btn_state[2]=(btn_arr[1]&0X08)/0X08;
@@ -32,8 +32,8 @@ var led_rumble=[0x11,0x00];
         // otherwise start polling
         device.write(SETUP);
         poller = setInterval(function() {
+            device.write(SETUP);
             device.read(read_callback,64);
-
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
         }, 62.5);
@@ -109,7 +109,7 @@ var led_rumble=[0x11,0x00];
       for (var i=0 ; i<=15 ; i++){}
         if (led=== LED[i]){
           led_state=i
-          led_rumble[1]=led_rumble[2]%16+led_state*16;
+          led_rumble[1]=led_rumble[1]%16+led_state*16;
           device.write(led_rumble);
           de
         }
@@ -158,6 +158,7 @@ var led_rumble=[0x11,0x00];
     var descriptor = {
         blocks: [
             ['r', '%m.button ボタンの値','get_button','a'],
+
       //      ['r', '%m.acc_axis 軸の加速度の値','send_accel_axis','x'],
       //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
