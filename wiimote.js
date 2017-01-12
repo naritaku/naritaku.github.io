@@ -1,9 +1,9 @@
 //  button['a','b','up','down','left','right','1','2','+','-','home'],
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
-var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■',];
+var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
 var led_state=1;
-var SETUP=[0xA2,0X12,0x04,0x33];
-var led_rumble=[0xA2,0X11,0x00];
+var SETUP=[0xA2,0x12,0x04,0x33];
+var led_rumble=[0xA2,0x11,0x00];
 new (function() {
     var device = null;
     var input = null;
@@ -113,7 +113,6 @@ new (function() {
           led_rumble[2]=led_rumble[2]%16+led_state*16;
           device.write(led_rumble);
         }
-        break;
     }
 
     ext.rumble_on = function() {
