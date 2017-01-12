@@ -32,7 +32,7 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            device.write(setup);
+            device.write(SETUP);
             device.read(read_callback,64);
 
             //device.write(0xA2120415);
