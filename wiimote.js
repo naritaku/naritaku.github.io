@@ -4,6 +4,7 @@ var led_state=1;
 var rumble=0;
 var dateMode=15;//states check
 var write_data=0;
+var setup=[0xA2,0X12,0x04,0x15];
 new (function() {
     var device = null;
     var input = null;
@@ -32,9 +33,7 @@ new (function() {
         // otherwise start polling
 
         poller = setInterval(function() {
-            write_data=-1575877583;
-            console.log(write_data);
-            device.write(write_data);
+            device.write(setup);
             device.read(read_callback,64);
 
             //device.write(0xA2120415);
