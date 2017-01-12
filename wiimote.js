@@ -1,10 +1,9 @@
 //  button['a','b','up','down','left','right','1','2','+','-','home'],
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
+var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■',];
 var led_state=1;
-var rumble=0;
-var dateMode=15;//states check
-var write_data=0;
-var setup=[0xA2,0X12,0x04,0x15];
+var SETUP=[0xA2,0X12,0x04,0x33];
+var led_rumble[0xA2,0X11,0x00];
 new (function() {
     var device = null;
     var input = null;
@@ -74,8 +73,7 @@ new (function() {
         return {status: 2, msg: 'connected'};
     }
 
-    // Converts a byte into a value of the range -1 -> 1 with two decimal places of precision
-//    function convertByteStr(byte) { return (parseInt(byte, 16) - 128) / 128; }
+
     ext.get_button = function(buttton) {
       console.log(button);
       console.log(btn_state[0]);
@@ -108,24 +106,25 @@ new (function() {
       }
     }
 
-    ext.trunOnLED = function(LED) {
-        if ( LED>= 0 && LED<=15){
-          led_state=Math.round(LED);
-          console.log(led_state);
-          console.log("%f",0xA21100 | led_state*0x10);
-          device.write(0xA21100 | led_state*0x10);
+    ext.trunOnLED = function(led) {
+      for (var i=0 ; i<=15 ; i++){}
+        if (led=== LED[i]){
+          led_state=i
+          led_rumble[2]=led_rumble[2]%16+led_state*16;
+          device.write(led_rumble);
         }
+        break;
     }
 
     ext.rumble_on = function() {
-        rumble=1;
-        device.write(0xA21101);
+        led_rumble[2]= led_state*16+1 ;
+        device.write(led_rumble);
         setTimeout(rumble_off, 1000*rumble_time);
     }
 
     ext.rumble_off = function() {
-      device.write(0xA21100);
-      rumble=0;
+      led_rumble[2]=led_state*16;
+      device.write( led_rumble);
     }
 
 
@@ -163,7 +162,7 @@ new (function() {
       //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
       //      ['r', '加速度の大きさ','send_accel_scale_magnitude','a'],
-            [' ', 'LEDを %n で点灯 ','trunOnLED',1],
+            [' ', 'LEDを %m.led で点灯 ','trunOnLED','□□□□'],
             [' ', '%n 秒間振動させる ','rumble_on',1],
             ['h', '%m.button ボタンが押されたとき', 'when_push','a'],
         ],
@@ -171,6 +170,7 @@ new (function() {
           button:['a','b','up','down','left','right','1','2','+','-','home'],
           acc_axis:['x','y','z'],
           ir_axis:['x','y'],
+          led:['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■',],
         }
     };
     ScratchExtensions.register('Wiimote', descriptor, ext, {type: 'hid', vendor:0x057e, product:0x0306});
