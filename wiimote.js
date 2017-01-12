@@ -162,7 +162,7 @@ new (function() {
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
       //      ['r', '加速度の大きさ','send_accel_scale_magnitude','a'],
             [' ', 'LEDを %m.led で点灯 ','trunOnLED','□□□□'],
-            [' ', '%n 秒間振動させる ','rumble_on',1],
+            [' ', 'モーターを振動させる ','rumble_on'],
             ['h', '%m.button ボタンが押されたとき', 'when_push','a'],
         ],
         menus: {
