@@ -4,7 +4,7 @@ var LED=['□□□□','□□□■','□□■□','□□■■','□■□�
 var led_state=1;
 var SETUP=[0xA2,0x12,0x04,0x33];
 var led_rumble=[0xA2,0x11,0x00];
-new (function() {
+(function(ext) {
     var device = null;
     var input = null;
     var poller = null;
@@ -12,7 +12,7 @@ new (function() {
 
     function read_callback(data) {
       var btn_arr = new Uint8Array(data);
-      console.log(btn_arr);
+      console.log(btn_state);
       btn_state[0]=(btn_arr[2]&0X08)/0X08;
       btn_state[1]=(btn_arr[2]&0X04)/0X04;
       btn_state[2]=(btn_arr[1]&0X08)/0X08;
@@ -30,9 +30,8 @@ new (function() {
         // if device fails to open, forget about it
         if (dev == null) device = null;
         // otherwise start polling
-
+        device.write(SETUP);
         poller = setInterval(function() {
-            device.write(SETUP);
             device.read(read_callback,64);
 
             //device.write(0xA2120415);
