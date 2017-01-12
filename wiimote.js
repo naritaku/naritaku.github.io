@@ -3,7 +3,7 @@ var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■',];
 var led_state=1;
 var SETUP=[0xA2,0X12,0x04,0x33];
-var led_rumble[0xA2,0X11,0x00];
+var led_rumble=[0xA2,0X11,0x00];
 new (function() {
     var device = null;
     var input = null;
