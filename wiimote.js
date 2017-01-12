@@ -2,8 +2,8 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
 var led_state=1;
-var SETUP=[0xA2,0x12,0x04,0x33];
-var led_rumble=[0xA2,0x11,0x00];
+var SETUP=[0x12,0x04,0x33];
+var led_rumble=[0x11,0x00];
 (function(ext) {
     var device = null;
     var input = null;
@@ -109,19 +109,21 @@ var led_rumble=[0xA2,0x11,0x00];
       for (var i=0 ; i<=15 ; i++){}
         if (led=== LED[i]){
           led_state=i
-          led_rumble[2]=led_rumble[2]%16+led_state*16;
+          led_rumble[1]=led_rumble[2]%16+led_state*16;
           device.write(led_rumble);
+          de
         }
     }
 
     ext.rumble_on = function() {
-        led_rumble[2]= led_state*16+1 ;
+        led_rumble[1]= led_state*16+1 ;
+        console.log(led_rumble)
         device.write(led_rumble);
         setTimeout(rumble_off, 1000*rumble_time);
     }
 
     ext.rumble_off = function() {
-      led_rumble[2]=led_state*16;
+      led_rumble[1]=led_state*16;
       device.write( led_rumble);
     }
 
