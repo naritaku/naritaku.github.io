@@ -109,22 +109,25 @@ var led_rumble=[0x11,0x00];
       for (var i=0 ; i<=15 ; i++){}
         if (led=== LED[i]){
           led_state=i
-          led_rumble[1]=led_rumble[1]%16+led_state*16;
+          console.log(led_state);
+          led_rumble[2]=led_rumble[2]%16+led_state*16;
           device.write(led_rumble);
-          de
+          device.read(read_callback,64);
         }
     }
 
     ext.rumble_on = function() {
-        led_rumble[1]= led_state*16+1 ;
+        led_rumble[2]= led_state*16+1 ;
         console.log(led_rumble)
         device.write(led_rumble);
+        device.read(read_callback,64);
         setTimeout(rumble_off, 1000*rumble_time);
     }
 
     ext.rumble_off = function() {
-      led_rumble[1]=led_state*16;
+      led_rumble[2]=led_state*16;
       device.write( led_rumble);
+      device.read(read_callback,64);
     }
 
 
