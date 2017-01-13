@@ -1,8 +1,8 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
-var led_state=1;
+var LED_RUMBLE=[0x11,0x00];
 var SETUP=[0x12,0x04,0x31];
-var GETSTATE=[0x15,0x00];
+var GETSTATE=[0x15,0x70];
 var rumble=0;
 (function(ext) {
     var device = null;
@@ -30,17 +30,18 @@ var rumble=0;
         // if device fails to open, forget about it
         if (dev == null) device = null;
         // otherwise start polling
-        device.write(SETUP);
+    /*    device.write(SETUP);
         GETSTATE[1]=rumble
         device.write(GETSTATE);
         poller = setInterval(function() {
-            GETSTATE[1]=rumble
-            device.write(GETSTATE);
             device.read(read_callback,64);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
+        }, 62.5);*/
+        device.write(LED_RUMBLE);
+        poller = setInterval(function() {
+            device.read(read_callback,64);
         }, 62.5);
-
     };
     ext._deviceConnected = function(dev) {
         if(device) return;
