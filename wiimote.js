@@ -3,7 +3,6 @@ var LED=['□□□□','□□□■','□□■□','□□■■','□■□�
 var LED_RUMBLE=[0x11,0x00];
 var SETUP=[0x12,0x04,0x31];
 var GETSTATE=[0x15,0x00];
-var rumble=0;
 (function(ext) {
     var device = null;
     var input = null;
@@ -103,25 +102,25 @@ var rumble=0;
     }
 
     ext.trunOnLED = function(led) {
-      for (var i=0 ; i<=15 ; i++){}
+    /*  for (var i=0 ; i<=15 ; i++){}
         if (led=== LED[i]){
           led_state=i
           console.log(led_state);
           led_rumble[2]=led_rumble[2]%16+led_state*16;
           device.write(led_rumble);
           device.read(read_callback,64);
-        }
-        device.write(led_rumble);
+        }*/
+        device.write([0x11,0x70]);
     }
 
 
     ext.rumble_on = function() {
-        rumble=1;
+  //      rumble=1;
         setTimeout(rumble_off, 1000);
     }
 
     ext.rumble_off = function() {
-      rumble=0;
+  //    rumble=0;
     }
 
 
