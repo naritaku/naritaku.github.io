@@ -31,8 +31,9 @@ var led_rumble=[0x11,0x00];
         if (dev == null) device = null;
         // otherwise start polling
         device.write(SETUP);
+        device.write(GETSTATE);
         poller = setInterval(function() {
-            device.write(GETSTATE);
+
             device.read(read_callback,64);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
