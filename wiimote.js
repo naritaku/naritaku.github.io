@@ -2,9 +2,9 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
 var led_state=1;
-var SETUP=[0x12,0x05,0x33];
-var GETSTATE=[0x15,0x01];
-var led_rumble=[0x11,0x70];
+var SETUP=[0x12,0x04,0x31];
+var GETSTATE=[0x15,0x00];
+var led_rumble=[0x11,0x00];
 (function(ext) {
     var device = null;
     var input = null;
@@ -32,6 +32,7 @@ var led_rumble=[0x11,0x70];
         if (dev == null) device = null;
         // otherwise start polling
         device.write(GETSTATE);
+        device.read(read_callback,64);
         device.write(SETUP);
         poller = setInterval(function() {
             device.read(read_callback,64);
@@ -105,29 +106,28 @@ var led_rumble=[0x11,0x70];
     }
 
     ext.trunOnLED = function(led) {
-    /*  for (var i=0 ; i<=15 ; i++){}
+      for (var i=0 ; i<=15 ; i++){}
         if (led=== LED[i]){
           led_state=i
           console.log(led_state);
           led_rumble[2]=led_rumble[2]%16+led_state*16;
           device.write(led_rumble);
           device.read(read_callback,64);
-        }*/
-        device.write(led_rumble);
+        }
     }
 
     ext.rumble_on = function() {
-    /*    led_rumble[2]= led_state*16+1 ;
+        led_rumble[2]= led_state*16+1 ;
         console.log(led_rumble)
         device.write(led_rumble);
         device.read(read_callback,64);
-        setTimeout(rumble_off, 1000*rumble_time);*/
+        setTimeout(rumble_off, 1000*rumble_time);
     }
 
     ext.rumble_off = function() {
-    /*  led_rumble[2]=led_state*16;
+      led_rumble[2]=led_state*16;
       device.write( led_rumble);
-      device.read(read_callback,64);*/
+      device.read(read_callback,64);
     }
 
 
