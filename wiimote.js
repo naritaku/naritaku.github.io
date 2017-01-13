@@ -123,7 +123,7 @@ var rumble=0;
 
     ext.rumble_on = function() {
         rumble=1;
-        setTimeout(rumble_off, 1000*rumble_time);
+        setTimeout(rumble_off, 1000);
     }
 
     ext.rumble_off = function() {
