@@ -3,7 +3,7 @@ var LED=['□□□□','□□□■','□□■□','□□■■','□■□�
 var led_state=1;
 var SETUP=[0x12,0x04,0x31];
 var GETSTATE=[0x15,0x00];
-var led_rumble=[0x11,0x70];
+var rumble=0;
 (function(ext) {
     var device = null;
     var input = null;
@@ -31,8 +31,11 @@ var led_rumble=[0x11,0x70];
         if (dev == null) device = null;
         // otherwise start polling
         device.write(SETUP);
+        GETSTATE[1]=rumble
         device.write(GETSTATE);
         poller = setInterval(function() {
+            GETSTATE[1]=rumble
+            device.write(GETSTATE);
             device.read(read_callback,64);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
@@ -119,17 +122,12 @@ var led_rumble=[0x11,0x70];
 
 
     ext.rumble_on = function() {
-        led_rumble[2]= led_state*16+1 ;
-        console.log(led_rumble)
-        device.write(led_rumble);
-        device.read(read_callback,64);
+        rumble=1;
         setTimeout(rumble_off, 1000*rumble_time);
     }
 
     ext.rumble_off = function() {
-      led_rumble[2]=led_state*16;
-      device.write( led_rumble);
-      device.read(read_callback,64);
+      rumble=0;
     }
 
 
