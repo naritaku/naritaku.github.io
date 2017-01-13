@@ -2,7 +2,7 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
 var led_state=1;
-var MODE_SETUP=[0x12,0x04,0x33];
+var MODE_SETUP=[0x12,0x04,0x31];
 var GET_STATE=[0x15,0x00];
 var IR_SETUP1=[0x13,0x04];
 var IR_SETUP2=[0x1a,0x04];
@@ -33,12 +33,11 @@ var led_rumble=[0x11,0xF0];
         // if device fails to open, forget about it
         if (dev == null) device = null;
         // otherwise start polling
-        device.write(IR_SETUP1);
-        device.write(IR_SETUP2);
+  //      device.write(IR_SETUP1);
+  //      device.write(IR_SETUP2);
         device.write(MODE_SETUP);
         device.write(GET_STATE);
         poller = setInterval(function() {
-            device.write(MODE_SETUP);
             device.read(read_callback,64);
         }, 62.5);
 
