@@ -1,7 +1,7 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
 var led_state=1;
-var SETUP=[0x12,0x05,0x31];
+var SETUP=[0x12,0x04,0x31];
 var GETSTATE=[0x15,0x00];
 var led_rumble=[0x11,0x70];
 (function(ext) {
@@ -34,7 +34,7 @@ var led_rumble=[0x11,0x70];
         device.write(SETUP);
 
         poller = setInterval(function() {
-
+            device.write(SETUP);
             device.read(read_callback,64);
             //device.write(0xA2120415);
             //var data =  device.read(read_callback,48);
