@@ -29,8 +29,8 @@ var GETSTATE=[0x15,0x00];
         // if device fails to open, forget about it
         if (dev == null) device = null;
         // otherwise start polling
-        device.write(GETSTATE);
         device.write(SETUP);
+        device.write(GETSTATE);
         poller = setInterval(function() {
             device.read(read_callback,64);
         }, 62.5);
