@@ -1,8 +1,8 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
-var LED_RUMBLE=[0x11,0x00];
-var SETUP=[0x12,0x04,0x31];
-var GETSTATE=[0x15,0x00];
+var LED_RUMBLE=[0xA2,0x11,0x00];
+var SETUP=[0xA2,0x12,0x04,0x31];
+var GETSTATE=[0xA2,0x15,0x00];
 (function(ext) {
     var device = null;
     var input = null;
