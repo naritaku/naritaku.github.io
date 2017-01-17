@@ -1,8 +1,8 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
-var LED_RUMBLE=[0xA2,0x11,0x00];
-var SETUP=[0xA2,0x12,0x04,0x31];
-var GETSTATE=[0xA2,0x15,0x00];
+var LED_RUMBLE=[0x11,0x00];
+var SETUP=[0x12,0x04,0x31];
+var GETSTATE=[0x15,0x00];
 (function(ext) {
     var device = null;
     var input = null;
@@ -28,9 +28,8 @@ var GETSTATE=[0xA2,0x15,0x00];
     function deviceOpened(dev) {
         // if device fails to open, forget about it
         if (dev == null) device = null;
-        // otherwise start polling
-        device.write(SETUP);
         device.write(GETSTATE);
+        device.write(SETUP);
         poller = setInterval(function() {
             device.read(read_callback,64);
         }, 62.5);
@@ -153,14 +152,14 @@ var GETSTATE=[0xA2,0x15,0x00];
 
     var descriptor = {
         blocks: [
-            ['r', '%m.button ボタンの値','get_button','a'],
+            ['r', 'a ボタンの値','get_button','a'],
 
       //      ['r', '%m.acc_axis 軸の加速度の値','send_accel_axis','x'],
       //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
       //      ['r', '加速度の大きさ','send_accel_scale_magnitude','a'],
-            [' ', 'LEDを %m.led で点灯 ','trunOnLED','□□□□'],
-            [' ', 'モーターを振動させる ','rumble_on'],
+    //        [' ', 'LEDを %m.led で点灯 ','trunOnLED','□□□□'],
+      //      [' ', 'モーターを振動させる ','rumble_on'],
             ['h', '%m.button ボタンが押されたとき', 'when_push','a'],
         ],
         menus: {
