@@ -12,8 +12,6 @@
     function deviceOpened(dev) {
         // if device fails to open, forget about it
         if (dev == null) device = null;
-        device.write(GETSTATE);
-        device.write(SETUP);
         poller = setInterval(function() {
             device.read(read_callback,64);
         }, 62.5);
@@ -54,14 +52,17 @@
 
     ext.mes3 = function(a,b,c) {
       device.write([a,b,c]);
+      device.read(read_callback,64);
     }
 
     ext.mes2 = function(a,b) {
       device.write([a,b]);
+      device.read(read_callback,64);
     }
 
     ext.mes1 = function(a) {
       device.write([a]);
+      device.read(read_callback,64);
     }
 
     var descriptor = {
