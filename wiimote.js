@@ -30,8 +30,8 @@ var GETSTATE=[0x15,0x00];
         if (dev == null) device = null;
         //device.write(GETSTATE);
         //device.write(SETUP);
-        device.write(0x120431);
-        device.write(0x1500);
+        device.write(new Uint8Array(SETUP).buffer);
+        device.write(new Uint8Array(GETSTATE).buffer);
         poller = setInterval(function() {
             device.read(read_callback,64);
         }, 62.5);
@@ -111,7 +111,7 @@ var GETSTATE=[0x15,0x00];
           device.write(led_rumble);
           device.read(read_callback,64);
         }*/
-        device.write([0x11,0x70]);
+        device.write(new Uint8Array(LED_RUMBLE).buffer);
     }
 
 
