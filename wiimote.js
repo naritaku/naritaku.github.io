@@ -1,8 +1,8 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
-var LED_RUMBLE=[0x11,0x00,0x00,0x00,0x00,0x00,0x00,0x00];
-var SETUP=[0x12,0x04,0x31,0x00,0x00,0x00,0x00,0x00];
-var GETSTATE=[0x15,0x00,0x00,0x00,0x00,0x00,0x00,0x00];
+var LED_RUMBLE=[0x11,0x00];
+var SETUP=[0x12,0x04,0x30];
+var GETSTATE=[0x15,0x00];
 (function(ext) {
     var device = null;
     var input = null;
@@ -33,6 +33,7 @@ var GETSTATE=[0x15,0x00,0x00,0x00,0x00,0x00,0x00,0x00];
         device.write(new Uint8Array(SETUP).buffer);
         device.write(new Uint8Array(GETSTATE).buffer);
         poller = setInterval(function() {
+            device.write(new Uint8Array(SETUP).buffer);
             device.read(read_callback,64);
             console.log()
         }, 62.5);
