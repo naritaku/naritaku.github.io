@@ -1,8 +1,8 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','□□□■','□□■□','□□■■','□■□□','□■□■','□■■□','□■■■','■□□□','■□□■','■□■□','■□■■','■■□□','■■□■','■■■□','■■■■'];
-var LED_RUMBLE=[0x11,0x00];
-var SETUP=[0x12,0x04,0x31];
-var GETSTATE=[0x15,0x00];
+var LED_RUMBLE=newUint[0x11,0x00,0x00,0x00,0x00,0x00,0x00,0x00];
+var SETUP=[0x12,0x04,0x31,0x00,0x00,0x00,0x00,0x00];
+var GETSTATE=[0x15,0x00,0x00,0x00,0x00,0x00,0x00,0x00];
 (function(ext) {
     var device = null;
     var input = null;
@@ -34,6 +34,7 @@ var GETSTATE=[0x15,0x00];
         device.write(new Uint8Array(GETSTATE).buffer);
         poller = setInterval(function() {
             device.read(read_callback,64);
+            console.log()
         }, 62.5);
     };
     ext._deviceConnected = function(dev) {
@@ -42,7 +43,7 @@ var GETSTATE=[0x15,0x00];
         device = dev;
         device.open(deviceOpened);
 
-//        setInterval(function() { console.log(input); }, 100);
+//        setInterval(function() { LED_RUMBLE }, 100);
     };
 
     ext._deviceRemoved = function(dev) {
