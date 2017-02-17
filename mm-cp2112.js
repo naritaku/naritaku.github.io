@@ -71,7 +71,7 @@ new (function() {
         }
     }
     ext.GPIO1on = function(pin) {
-      write(0x0306);
+      write([0x02,0x13]);
     }
 
     var descriptor = {
