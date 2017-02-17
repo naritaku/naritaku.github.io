@@ -77,8 +77,7 @@ new (function() {
     var descriptor = {
         blocks: [
             [' ', 'GPIO1 on', 'GPIO1on'],
-        menus: {
-        }
+        ]
     };
     ScratchExtensions.register('MM-CP2112A', descriptor, ext, {type: 'hid', vendor:0x10C4, product:0xEA90});
 })();
