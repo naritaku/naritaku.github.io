@@ -1,5 +1,7 @@
 var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
 var LED=['□□□□','■□□□','□■□□','■■□□','□□■□','■□■□','□■■□','■■■','□□□■','■□□■','□■□■','■■□■','□□■■','■□■■','□■■■','■■■■'];
+var ACCEL:['x軸','y軸','z軸','大きさ'],
+var acc_value=[0,0,0,0];
 var LED_RUMBLE=[0x11,0x00];
 var SETUP=[0x12,0x04,0x31];
 var GETSTATE=[0x15,0x00];
@@ -10,19 +12,24 @@ var GETSTATE=[0x15,0x00];
     var ext = this;
 
     function read_callback(data) {
-      var btn_arr = new Uint8Array(data);
-      console.log(btn_arr);
-      btn_state[0]=(btn_arr[2]&0X08)/0X08;
-      btn_state[1]=(btn_arr[2]&0X04)/0X04;
-      btn_state[2]=(btn_arr[1]&0X08)/0X08;
-      btn_state[3]=(btn_arr[1]&0X04)/0X04;
-      btn_state[4]=(btn_arr[1]&0X01)/0X01;
-      btn_state[5]=(btn_arr[1]&0X02)/0X02;
-      btn_state[6]=(btn_arr[2]&0X02)/0X02;
-      btn_state[7]=(btn_arr[2]&0X01)/0X01;
-      btn_state[8]=(btn_arr[1]&0X10)/0X10;
-      btn_state[9]=(btn_arr[2]&0X10)/0X10;
-      btn_state[10]=(btn_arr[2]&0X80)/0X80;
+      var data_arr = new Uint8Array(data);
+      console.log(data_arr);
+      btn_state[0]=(data_arr[2]&0X08)/0X08;
+      btn_state[1]=(data_arr[2]&0X04)/0X04;
+      btn_state[2]=(data_arr[1]&0X08)/0X08;
+      btn_state[3]=(data_arr[1]&0X04)/0X04;
+      btn_state[4]=(data_arr[1]&0X01)/0X01;
+      btn_state[5]=(data_arr[1]&0X02)/0X02;
+      btn_state[6]=(data_arr[2]&0X02)/0X02;
+      btn_state[7]=(data_arr[2]&0X01)/0X01;
+      btn_state[8]=(data_arr[1]&0X10)/0X10;
+      btn_state[9]=(data_arr[2]&0X10)/0X10;
+      btn_state[10]=(data_arr[2]&0X80)/0X80;
+
+      acc_value[0]=(data_arr[3]*4+(data_arr[1]&&0x60)/0x20)*2/1023-1;
+      acc_value[1]=(data_arr[4]*4+(data_arr[1]&&0x40)/0x20)*2/1023-1;
+      acc_value[2]=(data_arr[5]*4+(data_arr[1]&&0x20)/0x10)*2/1023-1;
+      acc_value[3]=Math.sqrt(acc_value[0]*acc_value[0]+acc_value[1]*acc_value[1]+acc_value[2]*acc_value[2]);
     };
 
     function deviceOpened(dev) {
@@ -112,7 +119,11 @@ var GETSTATE=[0x15,0x00];
         setTimeout(rumble_off, 1000);
     }
 
-    ext.rumble_off = function() {
+    ext.send_accel_axis = function(acc_axis) {
+      for (var acc_num=0 ; acc_num<16 ; acc_num++){
+        if(ACCEL[acc_num]===acc_axis){break;};
+      }
+      return ACCEL[acc_num];
     }
 
 
@@ -145,9 +156,7 @@ var GETSTATE=[0x15,0x00];
 
     var descriptor = {
         blocks: [
-            ['r', 'a ボタンの値','get_button','a'],
-
-      //      ['r', '%m.acc_axis 軸の加速度の値','send_accel_axis','x'],
+            ['r', '加速度 %m.acc_axis','send_accel_axis','大きさ'],
       //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
       //      ['r', '加速度の大きさ','send_accel_scale_magnitude','a'],
@@ -157,7 +166,7 @@ var GETSTATE=[0x15,0x00];
         ],
         menus: {
           button:['a','b','up','down','left','right','1','2','+','-','home'],
-          acc_axis:['x','y','z'],
+          acc_axis:['x軸','y軸','z軸','大きさ'],
           ir_axis:['x','y'],
           led:['□□□□','■□□□','□■□□','■■□□','□□■□','■□■□','□■■□','■■■','□□□■','■□□■','□■□■','■■□■','□□■■','■□■■','□■■■','■■■■'],
         }
