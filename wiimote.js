@@ -12,7 +12,7 @@
     var SETUP=[0x12,0x04,0x31];
     var GETSTATE=[0x15,0x00];
 
-    
+
     function read_callback(data) {
       var data_arr = new Uint8Array(data);
       console.log(data_arr);
@@ -29,6 +29,7 @@
       btn_state[10]=(data_arr[2]&0X80)/0X80;
 
       acc_value[0]=((data_arr[3]*4+(data_arr[1]&&0x60)/0x20)*2/1023-1)*100;
+      console.log(acc_value);
       acc_value[1]=((data_arr[4]*4+(data_arr[1]&&0x40)/0x20)*2/1023-1)*100;
       acc_value[2]=((data_arr[5]*4+(data_arr[1]&&0x20)/0x10)*2/1023-1)*100;
       acc_value[3]=Math.sqrt(acc_value[0]*acc_value[0]+acc_value[1]*acc_value[1]+acc_value[2]*acc_value[2])/Math.sqrt(3);
