@@ -102,7 +102,7 @@ var GETSTATE=[0x15,0x00];
 				for (var led_num=0 ; led_num<16 ; led_num++){
   				if(LED[led_num]===led){break;};
 				}
-				LED_RUMBLE[1]=led*16;
+				LED_RUMBLE[1]=led_num*16;
         device.write(new Uint8Array(LED_RUMBLE).buffer);
 				console.log(LED_RUMBLE);
     }
