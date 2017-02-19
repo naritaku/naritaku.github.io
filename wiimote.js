@@ -41,6 +41,7 @@
           return(acc_z);
         case '加速度の大きさ':
           return(acc_mag);
+      }
     }
     function deviceOpened(dev) {
         if (dev == null) device = null;
@@ -139,6 +140,7 @@
           return(acc_z>magnitude);
         case '加速度の大きさ':
           return(acc_mag>magnitude);
+        }
     }
 
     ext.when_push = function(button) {
