@@ -5,8 +5,8 @@
     var ext = this;
     var btn_a,btn_b,btn_up,btn_down,btn_left,btn_right,btn_1,btn_2,btn_plus,btn_minus,btn_home;
     var acc_x,acc_y,acc_z,acc_mag;
+    var rumble_state,led_state;
     var LED=['□□□□','■□□□','□■□□','■■□□','□□■□','■□■□','□■■□','■■■□','□□□■','■□□■','□■□■','■■□■','□□■■','■□■■','□■■■','■■■■'];
-    var ACCEL=['x軸','y軸','z軸','大きさ'];
     var LED_RUMBLE=[0x11,0x00];
     var SETUP=[0x12,0x04,0x31];
     var GETSTATE=[0x15,0x00];
@@ -72,7 +72,6 @@
     ext._shutdown = function() {
         if(poller) clearInterval(poller);
         poller = null;
-
         if(device) device.close();
         device = null;
     }
@@ -83,7 +82,7 @@
     }
 
 
-  /*  ext.get_button = function(buttton) {
+    ext.get_button = function(buttton) {
       console.log(button);
       console.log(btn_a);
       switch (button) {
@@ -113,21 +112,31 @@
         default:
             return("err");
       }
-    }*/
+    }
 
     ext.trunOnLED = function(led) {
 				for (var led_num=0 ; led_num<16 ; led_num++){
   				if(LED[led_num]===led){break;};
 				}
-				LED_RUMBLE[1]=led_num*16;
+        led_state=led_num*16
+
+				LED_RUMBLE[1]=led_state+rumble_state;
         device.write(new Uint8Array(LED_RUMBLE).buffer);
     }
 
 
-/*    ext.rumble_on = function() {
-        setTimeout(rumble_off, 1000);
-    }*/
+    ext.rumble_on = function(time) {
+      rumble_state=1
+      LED_RUMBLE[1]=led_state+rumble_state;
+      device.write(new Uint8Array(LED_RUMBLE).buffer);
+      setTimeout(rumble_off, time*1000);
+    }
 
+    ext.rumble_off = function() {
+      rumble_state=0
+      LED_RUMBLE[1]=led_state+rumble_state;
+      device.write(new Uint8Array(LED_RUMBLE).buffer);
+    }
 
 
     ext.when_accel = function(acc_axis,magnitude) {
@@ -173,10 +182,13 @@
     var descriptor = {
         blocks: [
             ['r', '%m.acc_axis の値','send_accel_axis','加速度の大きさ'],
+            ['r', '%m.btton ボタンの値','get_button','a'],
+
       //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
             [' ', 'LEDを %m.led で点灯 ','trunOnLED','□□□□'],
-      //      [' ', 'モーターを振動させる ','rumble_on'],
+            [' ', 'モーターを %n 秒振動させる ','rumble_on'],
+            [' ', 'モーターの振動を止める ','rumble_off'],
             ['h', '%m.button ボタンが押されたとき', 'when_push','a'],
             ['h', '%m.acc_axis > %n のとき', 'when_accel','加速度の大きさ','40'],
         ],
