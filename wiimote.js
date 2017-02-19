@@ -1,40 +1,47 @@
-
 (function(ext) {
     var device = null;
     var input = null;
     var poller = null;
     var ext = this;
-    var btn_state=[0,0,0,0,0,0,0,0,0,0,0];
+    var btn_a,btn_b,btn_up,btn_down,btn_left,btn_right,btn_1,btn_2,btn_plus,btn_minus,btn_home;
+    var acc_x,acc_y,acc_z,acc_mag;
     var LED=['□□□□','■□□□','□■□□','■■□□','□□■□','■□■□','□■■□','■■■□','□□□■','■□□■','□■□■','■■□■','□□■■','■□■■','□■■■','■■■■'];
     var ACCEL=['x軸','y軸','z軸','大きさ'];
-    var acc_value=[0,0,0,0];
     var LED_RUMBLE=[0x11,0x00];
     var SETUP=[0x12,0x04,0x31];
     var GETSTATE=[0x15,0x00];
 
-
     function read_callback(data) {
       var data_arr = new Uint8Array(data);
       console.log(data_arr);
-      btn_state[0]=(data_arr[2]&0X08)/0X08;
-      btn_state[1]=(data_arr[2]&0X04)/0X04;
-      btn_state[2]=(data_arr[1]&0X08)/0X08;
-      btn_state[3]=(data_arr[1]&0X04)/0X04;
-      btn_state[4]=(data_arr[1]&0X01)/0X01;
-      btn_state[5]=(data_arr[1]&0X02)/0X02;
-      btn_state[6]=(data_arr[2]&0X02)/0X02;
-      btn_state[7]=(data_arr[2]&0X01)/0X01;
-      btn_state[8]=(data_arr[1]&0X10)/0X10;
-      btn_state[9]=(data_arr[2]&0X10)/0X10;
-      btn_state[10]=(data_arr[2]&0X80)/0X80;
+      btn_a=(data_arr[2]&0X08)/0X08;
+      btn_b=(data_arr[2]&0X04)/0X04;
+      btn_up=(data_arr[1]&0X08)/0X08;
+      btn_down=(data_arr[1]&0X04)/0X04;
+      btn_left=(data_arr[1]&0X01)/0X01;
+      btn_right=(data_arr[1]&0X02)/0X02;
+      btn_1=(data_arr[2]&0X02)/0X02;
+      btn_2=(data_arr[2]&0X01)/0X01;
+      btn_plus=(data_arr[1]&0X10)/0X10;
+      btn_minus=(data_arr[2]&0X10)/0X10;
+      btn_home=(data_arr[2]&0X80)/0X80;
 
-      acc_value[0]=((data_arr[3]*4+(data_arr[1]&&0x60)/0x20)*2/1023-1)*100;
-      console.log(acc_value);
-      acc_value[1]=((data_arr[4]*4+(data_arr[1]&&0x40)/0x20)*2/1023-1)*100;
-      acc_value[2]=((data_arr[5]*4+(data_arr[1]&&0x20)/0x10)*2/1023-1)*100;
-      acc_value[3]=Math.sqrt(acc_value[0]*acc_value[0]+acc_value[1]*acc_value[1]+acc_value[2]*acc_value[2])/Math.sqrt(3);
+      acc_x=((data_arr[3]*4+(data_arr[1]&&0x60)/0x20)*2/1023-1)*100;
+      acc_y=((data_arr[4]*4+(data_arr[1]&&0x40)/0x20)*2/1023-1)*100;
+      acc_z=((data_arr[5]*4+(data_arr[1]&&0x20)/0x10)*2/1023-1)*100;
+      acc_mag=Math.sqrt(acc_x*acc_x+acc_y*acc_y+acc_z*acc_z)/Math.sqrt(3);
     };
-
+    ext.send_accel_axis = function(acc_axis) {
+      switch (acc_axis) {
+        case 'x軸加速度':
+          return(acc_x);
+        case 'y軸加速度':
+          return(acc_y);
+        case 'z軸加速度':
+          return(acc_z);
+        case '加速度の大きさ':
+          return(acc_mag);
+    }
     function deviceOpened(dev) {
         if (dev == null) device = null;
         device.write(new Uint8Array(SETUP).buffer);
@@ -42,7 +49,6 @@
         device.write(new Uint8Array(GETSTATE).buffer);
         poller = setInterval(function() {
             device.read(read_callback,64);
-            console.log()
         }, 62.5);
     };
     ext._deviceConnected = function(dev) {
@@ -78,31 +84,31 @@
 
   /*  ext.get_button = function(buttton) {
       console.log(button);
-      console.log(btn_state[0]);
+      console.log(btn_a);
       switch (button) {
         case 'a':
           console.log("a check");
-          return(btn_state[0]);
+          return(btn_a);
         case 'b':
-          return(btn_state[1]);
+          return(btn_b);
         case 'up':
-          return(btn_state[2]);
+          return(btn_up);
         case 'down':
-            return(btn_state[3]);
+            return(btn_down);
         case 'left':
-            return(btn_state[4]);
+            return(btn_left);
         case 'right':
-            return(btn_state[5]);
+            return(btn_right);
         case '1':
-            return(btn_state[6]);
+            return(btn_1);
         case '2':
-            return(btn_state[7]);
+            return(btn_2);
         case '+':
-            return(btn_state[8]);
+            return(btn_plus);
         case '-':
-            return(btn_state[9]);
+            return(btn_minus);
         case 'home':
-            return(btn_state[10]);
+            return(btn_home);
         default:
             return("err");
       }
@@ -114,7 +120,6 @@
 				}
 				LED_RUMBLE[1]=led_num*16;
         device.write(new Uint8Array(LED_RUMBLE).buffer);
-				console.log(LED_RUMBLE);
     }
 
 
@@ -122,44 +127,44 @@
         setTimeout(rumble_off, 1000);
     }*/
 
-    ext.send_accel_axis = function(acc_axis) {
-      for (var acc_num=0 ; acc_num<16 ; acc_num++){
-        if(ACCEL[acc_num]===acc_axis){break;};
-      }
-      return acc_value[acc_num];
-    }
+
 
     ext.when_accel = function(acc_axis,magnitude) {
-      for (var acc_num=0 ; acc_num<16 ; acc_num++){
-        if(ACCEL[acc_num]===acc_axis){break;};
-      }
-      return acc_value[acc_num]>magnitude;
+      switch (acc_axis) {
+        case 'x軸加速度':
+          return(acc_x>magnitude);
+        case 'y軸加速度':
+          return(acc_y>magnitude);
+        case 'z軸加速度':
+          return(acc_z>magnitude);
+        case '加速度の大きさ':
+          return(acc_mag>magnitude);
     }
 
     ext.when_push = function(button) {
       switch (button) {
         case 'a':
-          return(btn_state[0]===1);
+          return(btn_a===1);
         case 'b':
-          return(btn_state[1]===1);
+          return(btn_b===1);
         case 'up':
-          return(btn_state[2]===1);
+          return(btn_up===1);
         case 'down':
-            return(btn_state[3]===1);
+            return(btn_down===1);
         case 'left':
-            return(btn_state[4]===1);
+            return(btn_left===1);
         case 'right':
-            return(btn_state[5]===1);
+            return(btn_right===1);
         case '1':
-            return(btn_state[6]===1);
+            return(btn_1===1);
         case '2':
-            return(btn_state[7]===1);
+            return(btn_2===1);
         case '+':
-            return(btn_state[8]===1);
+            return(btn_plus===1);
         case '-':
-            return(btn_state[9]===1);
+            return(btn_minus===1);
         case 'home':
-            return(btn_state[10]===1);
+            return(btn_home===1);
       }
     }
 
