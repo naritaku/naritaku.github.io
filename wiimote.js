@@ -8,8 +8,15 @@
     var rumble_state,led_state;
     var LED=['□□□□','■□□□','□■□□','■■□□','□□■□','■□■□','□■■□','■■■□','□□□■','■□□■','□■□■','■■□■','□□■■','■□■■','□■■■','■■■■'];
     var LED_RUMBLE=[0x11,0x00];
-    var SETUP=[0x12,0x04,0x31];
+    var SETUP=[0x12,0x04,0x37];
     var GETSTATE=[0x15,0x00];
+    var IR_SETUP=[[0x13,0x04],
+                  [0x1a,0x04],
+                  [0x16,0x04,0xb0,0x00,0x30,0x01,0x08],
+                  [0x16,0x04,0xb0,0x00,0x00,0x09,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0x00,0x0C],
+                  [0x16,0x04,0xb0,0x00,0x1A,0x02,0x00,0x00],
+                  [0x16,0x04,0xb0,0x00,0x33,0x01,0x01],
+                  [0x16,0x04,0xb0,0x00,0x30,0x01,0x08]];
 
     function read_callback(data) {
       var data_arr = new Uint8Array(data);
@@ -45,12 +52,15 @@
     }
     function deviceOpened(dev) {
         if (dev == null) device = null;
+        for (var i=0;i<7;i++){
+          device.write(new Uint8Array(IR_SETUP[i]).buffer);
+        }
         device.write(new Uint8Array(SETUP).buffer);
 				device.read(read_callback,48);
         device.write(new Uint8Array(GETSTATE).buffer);
         poller = setInterval(function() {
             device.read(read_callback,64);
-        }, 62.5);
+        }, 75);
     };
     ext._deviceConnected = function(dev) {
         if(device) return;
@@ -187,7 +197,7 @@
       //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
             [' ', 'LEDを %m.led で点灯 ','trunOnLED','□□□□'],
-            [' ', 'モーターを %n 秒振動させる ','rumble_on'],
+            [' ', 'モーターを %n 秒振動させる ','rumble_on','0.5'],
             [' ', 'モーターの振動を止める ','rumble_off'],
             ['h', '%m.button ボタンが押されたとき', 'when_push','a'],
             ['h', '%m.acc_axis > %n のとき', 'when_accel','加速度の大きさ','40'],
