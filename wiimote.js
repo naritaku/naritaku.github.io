@@ -8,21 +8,8 @@
     var rumble_state,led_state;
     var LED=['□□□□','■□□□','□■□□','■■□□','□□■□','■□■□','□■■□','■■■□','□□□■','■□□■','□■□■','■■□■','□□■■','■□■■','□■■■','■■■■'];
     var LED_RUMBLE=[0x11,0x00];
-    var MUTE=[0x19,0x04];
     var SETUP=[0x12,0x04,0x31];
     var GETSTATE=[0x15,0x00];
-    var Sound_SETUP=[[0x14,0x04],
-                    [0x19,0x04],
-                    [0x16,0x04,0x20,0x00,0x09,0x01,0x01],
-                    [0x16,0x04,0xA2,0x00,0x01,0x01,0x00],
-                    [0x16,0x04,0xA2,0x00,0x02,0x01,0x00],
-                    [0x16,0x04,0xA2,0x00,0x03,0x01,0x00],
-                    [0x16,0x04,0xA2,0x00,0x04,0x01,0x00],
-                    [0x16,0x04,0xA2,0x00,0x05,0x01,0x40],
-                    [0x16,0x04,0xA2,0x00,0x06,0x01,0x00],
-                    [0x16,0x04,0xA2,0x00,0x07,0x01,0x00],
-                    [0x16,0x04,0xA2,0x00,0x08,0x01,0x01],
-                  [0x16,0x04,0x20,0x00,0x09,0x01,0x01]];
 
     function read_callback(data) {
       var data_arr = new Uint8Array(data);
@@ -63,7 +50,7 @@
         device.write(new Uint8Array(GETSTATE).buffer);
         poller = setInterval(function() {
             device.read(read_callback,64);
-        }, 75);
+        }, 62.5);
     };
     ext._deviceConnected = function(dev) {
         if(device) return;
@@ -131,24 +118,11 @@
 				for (var led_num=0 ; led_num<16 ; led_num++){
   				if(LED[led_num]===led){break;};
 				}
-        led_state=led_num*16;
+        led_state=led_num*16
+
 				LED_RUMBLE[1]=led_state+rumble_state;
         device.write(new Uint8Array(LED_RUMBLE).buffer);
     }
-
-    ext.playFreq = function(freq,time) {
-      Sound_SETUP[6][6]= ( 0xff00 & Math.round(6000000 /freq) )/0x100
-      Sound_SETUP[5][6]=  0xff & Math.round(6000000 /freq)
-      for (var i=0 ; i<12 ; i++){
-        device.write(new Uint8Array(Sound_SETUP[i]).buffer);
-      }
-      setTimeout(sound_off, time*1000);
-    }
-
-    ext.sound_off = function() {
-      device.write(new Uint8Array(MUTE).buffer);
-    }
-
 
 
     ext.rumble_on = function(time) {
@@ -163,7 +137,6 @@
       LED_RUMBLE[1]=led_state+rumble_state;
       device.write(new Uint8Array(LED_RUMBLE).buffer);
     }
-
 
 
     ext.when_accel = function(acc_axis,magnitude) {
@@ -213,10 +186,8 @@
 
       //    ['r', '赤外線ポインタの%m.ir_axis 軸の座標','send_ir_axis','x'],
       //    ['b', 'リモコンが画面が向いている','send_ir_find'],
-            ['w', '周波数%n の音を%n 秒鳴らす','playFreq','262', '1'],
-            [' ', '音を止める ','sound_off'],
             [' ', 'LEDを %m.led で点灯 ','trunOnLED','□□□□'],
-            [' ', 'モーターを %n 秒振動させる ','rumble_on','0.5'],
+            [' ', 'モーターを %n 秒振動させる ','rumble_on'],
             [' ', 'モーターの振動を止める ','rumble_off'],
             ['h', '%m.button ボタンが押されたとき', 'when_push','a'],
             ['h', '%m.acc_axis > %n のとき', 'when_accel','加速度の大きさ','40'],
