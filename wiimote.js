@@ -9,7 +9,7 @@
     var LED=['□□□□','■□□□','□■□□','■■□□','□□■□','■□■□','□■■□','■■■□','□□□■','■□□■','□■□■','■■□■','□□■■','■□■■','□■■■','■■■■'];
     var LED_RUMBLE=[0x11,0x00];
     var MUTE=[0x19,0x04];
-    var SETUP=[0x12,0x04,0x37];
+    var SETUP=[0x12,0x04,0x31];
     var GETSTATE=[0x15,0x00];
     var Sound_SETUP=[[0x14,0x04],
                     [0x19,0x04],
@@ -58,9 +58,6 @@
     }
     function deviceOpened(dev) {
         if (dev == null) device = null;
-        for (var i=0;i<7;i++){
-          device.write(new Uint8Array(IR_SETUP[i]).buffer);
-        }
         device.write(new Uint8Array(SETUP).buffer);
 				device.read(read_callback,48);
         device.write(new Uint8Array(GETSTATE).buffer);
@@ -142,7 +139,7 @@
     ext.playFreq = function(freq,time) {
       Sound_SETUP[6][6]= ( 0xff00 & Math.round(6000000 /freq) )/0x100
       Sound_SETUP[5][6]=  0xff & Math.round(6000000 /freq)
-      for (var i=0 ; i<14 ; i++){
+      for (var i=0 ; i<12 ; i++){
         device.write(new Uint8Array(Sound_SETUP[i]).buffer);
       }
       setTimeout(sound_off, time*1000);
