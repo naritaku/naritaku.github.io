@@ -1,52 +1,223 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Word Test</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0" >
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <script type="text/javascript" src="word.js"></script>
-  <script type="text/javascript" src="test.js"></script>
-</head>
-<body>
-  <header>
-    <h1>Word Test</h1>
-    <p>HTML, CSS, JavaScript の勉強をかねて<wbr>制作してます</p>
-  </header>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>HappyNewYear</title>
+<meta charset="utf-8">
 
-  <div id="main">
-    <div class="content">
-      <h2>初期設定</h2>
-      <form id="setting" onsubmit="start();  return false;">
-          <ul>
-            <li><p>出題範囲:
-              <select name="range" id="range">
-                <option value="1">fruits</option>
-                <optgroup label="後期中間">
-                <option value="2">coset1(20words)</option>
-                <option value="3">coset2(20words)</option>
-                <option value="4">coset3(20words)</option>
-                <option value="5">coset4(20words)</option>
-                </optgroup>
-                <optgroup label="後期期末">
-                <option value="6">coset(120words)</option>
-              </optgroup>
-              </select></p></li>
-            <li><p>出題形式:
-              <select name="format">
-                <option value="1">書き取り</option>
-                <option value="2">4択</option>
-              </select></p></li>
-            <li><p>出題数:
-              <select name="q_num">
-                <option value="1">10問</option>
-                <option value="2">full</option>
-              </select></p></li>
-          </ul>
-          <div class="center">
-            <input type="button" value="始める" onClick="start()" class="button">
-          </div>
-      </form>
-    </div>
-  </div>
+<meta name="description" content="Happy New Year!">
+<meta name="author" content="Takuto Narisawa">
+<!--Ajust output size-->
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!--css & js-->
+<link rel="stylesheet" href="">
+<link rel="shortcut icon" href="img/favicon.ico">
+<script src="http://cdn.rawgit.com/phi-jp/phina.js/v0.2.0/build/phina.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript">
+
+    function GetQueryString() {
+        var result = new Object();
+        result['name']="";
+        if (1 < document.location.search.length) {
+            // 最初の1文字 (?記号) を除いた文字列を取得する
+            var query = document.location.search.substring(1);
+            // クエリの区切り記号 (&) で文字列を配列に分割する
+            var parameters = query.split('&');
+
+            for (var i = 0; i < parameters.length; i++) {
+                // パラメータ名とパラメータ値に分割する
+                var element = parameters[i].split('=');
+                var paramName = decodeURIComponent(element[0]);
+                var paramValue = decodeURIComponent(element[1]);
+                // パラメータ名をキーとして連想配列に追加する
+                result[paramName] = decodeURIComponent(paramValue);
+            }
+        }
+        return result;
+    }
+
+    // グローバルに展開
+phina.globalize();
+
+var ASSETS = {
+  // 画像
+  image: {
+    'ino': 'img/ino.gif',
+  },
+  // スプライトシート
+  spritesheet: {
+    "ino_ss":
+    {
+      // フレーム情報
+      "frame": {
+        "width": 56, // 1フレームの画像サイズ（横）
+        "height": 56, // 1フレームの画像サイズ（縦）
+        "cols": 2, // フレーム数（横）
+        "rows": 2, // フレーム数（縦）
+      },
+      // アニメーション情報
+      "animations" : {
+        "walk": { // アニメーション名
+          "frames": [0,1,2,3], // フレーム番号範囲
+          "next": "walk", // 次のアニメーション
+          "frequency": 2, // アニメーション間隔
+        },
+      }
+    },
+  }
+};
+
+/*
+ * メインシーン
+ */
+phina.define("MainScene", {
+  // 継承
+  superClass: 'DisplayScene',
+
+  init: function() {  // コンストラクタ
+
+    this.superInit();// 親クラス初期化
+
+    var self = this;    // thisを退避
+    var ground = RectangleShape().addChildTo(this);// 図形をシーンに追加
+    ground.width = 640;
+    ground.height = 160;
+    ground.fill="#f9d386";
+    ground.strokeWidth=0;
+    ground.setPosition(320, 880);      // 位置を指定
+    self.backgroundColor = 'skyblue';
+    var grass = RectangleShape().addChildTo(this);// 図形をシーンに追加
+    grass.width = 640;
+    grass.height = 40;
+    grass.fill="#339933";
+    grass.strokeWidth=0;
+    grass.setPosition(320, 800);      // 位置を指定
+    self.backgroundColor = 'skyblue';
+
+    //イノシシのアニメーション
+    var sprite = Sprite('ino', 56, 56).addChildTo(this);
+    var anim = FrameAnimation('ino_ss').attachTo(sprite);// スプライトにフレームアニメーションをアタッチ
+    anim.gotoAndPlay('walk');// アニメーションを指定
+    sprite.x = this.gridX.center();// 初期位置
+    sprite.y = 760;
+    sprite.scaleX = 3;
+    sprite.scaleY = 3;
+
+    var omikuji="大吉"
+    var param = GetQueryString();
+    if (param['name']!=""){
+        var label = Label({x:320,y:60,fontSize: 40,text:param['name']+"様"}).addChildTo(this);
+    }else{
+        var luck=['大吉','中吉','吉','末吉','凶'];
+        var omikuji=luck[Math.random() * 5];
+    }
+
+    Label({
+      text: '昨年はお世話になりました。\n今年もよろしくお願いします。',
+      fontSize: 40,
+  }).addChildTo(this).setPosition(320,  150);
+
+  Label({
+    text: 'ささやかですが、おみくじ機能をつけました。ぜひお楽しみください',
+    fontSize: 20,
+}).addChildTo(this).setPosition(320,  290);
+
+var button = Button({
+      x: 320,             // x座標
+      y: 400,             // y座標
+      width: 150,         // 横サイズ
+      height: 60,        // 縦サイズ
+      text: "占う",     // 表示文字
+      fontSize: 28,       // 文字サイズ
+      fontColor: 'black', // 文字色
+      cornerRadius: 10,   // 角丸み
+      fill: 'white',    // ボタン色
+      strokeWidth: 0,     // 枠太さ
+  }).addChildTo(this);
+
+    var cnt = 0;
+        // Android端末か確認。
+    var chkAndroid = navigator.userAgent.indexOf("Android")>0;
+    console.log("chkAndroid = "+chkAndroid);
+
+    button.onpointend = function(){
+        var param = GetQueryString();
+        if (param['name']!=""){
+            self.exit({score: '大吉',message: "皆様に幸福が訪れますように",hashtags:"",});
+        }
+        switch(Math.round(Math.random() * 5)){
+            case 0:
+                self.exit({score: '大吉',message: "皆様に幸福が訪れますように",hashtags:"",});
+                break;
+            case 1:
+                self.exit({score: '中吉',message: "皆様に幸福が訪れますように",hashtags:"",});
+                break;
+            case 2:
+                self.exit({score: '吉',message: "皆様に幸福が訪れますように",hashtags:"",});
+                break;
+            case 3:
+                self.exit({score: '小吉',message: "皆様に幸福が訪れますように",hashtags:"",});
+                break;
+            case 4:
+                self.exit({score: '凶',message: "皆様に幸福が訪れますように",hashtags:"",});
+                break;
+        }
+    };
+
+    button.onpointover = function(e){
+      // Android端末使用時のタップ遅延対策。
+      if (!e.pointer.getPointing()&&chkAndroid){
+        this.onpointend();
+        // 同じ処理2度書くのは大変なのでonpointend()を呼び出し。
+        // 素早く連打した時に重複してしまう場合がある。普通に使う分には問題なさそう？
+      }
+    };
+
+    sprite.update = function() {
+        if (sprite.x>0){
+          sprite.moveBy(-4, 0);
+        }else{
+          sprite.x = 640;// 初期位置
+        }
+    };
+},
+
+
+});
+/*
+ * メイン処理
+ */
+phina.main(function() {
+  // アプリケーションを生成
+  var app = GameApp({
+
+    title: 'Happy New Year',
+    startLabel: 'main',
+    width: 640,
+    height: 960,
+
+    // アセット読み込み
+    assets: ASSETS,
+    // MainScene から開始
+    //startLabel: 'main',
+  });
+
+
+//
+
+  // fps表示
+  //app.enableStats();
+  // 実行
+  app.run();
+});
+
+</script>
+</head>
+<body style="background-color: #91e3ff">
+<!-- canvas -->
+<canvas id="myCanvas" width="640" height="960"></canvas>
+</body>
 </html>

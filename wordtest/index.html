@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Word Test</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0" >
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" src="word.js"></script>
+  <script type="text/javascript" src="test.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Word Test</h1>
+    <p>HTML, CSS, JavaScript の勉強をかねて<wbr>制作してます</p>
+  </header>
+
+  <div id="main">
+    <div class="content">
+      <h2>初期設定</h2>
+      <form id="setting" onsubmit="start();  return false;">
+          <ul>
+            <li><p>出題範囲:
+              <select name="range" id="range">
+                <option value="1">fruits</option>
+                <optgroup label="後期中間">
+                <option value="2">coset1(20words)</option>
+                <option value="3">coset2(20words)</option>
+                <option value="4">coset3(20words)</option>
+                <option value="5">coset4(20words)</option>
+                </optgroup>
+                <optgroup label="後期期末">
+                <option value="6">coset(120words)</option>
+              </optgroup>
+              </select></p></li>
+            <li><p>出題形式:
+              <select name="format">
+                <option value="1">書き取り</option>
+                <option value="2">4択</option>
+              </select></p></li>
+            <li><p>出題数:
+              <select name="q_num">
+                <option value="1">10問</option>
+                <option value="2">full</option>
+              </select></p></li>
+          </ul>
+          <div class="center">
+            <input type="button" value="始める" onClick="start()" class="button">
+          </div>
+      </form>
+    </div>
+  </div>
+</html>
